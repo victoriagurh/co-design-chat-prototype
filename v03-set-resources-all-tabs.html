@@ -492,7 +492,8 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow-sm);
       padding: 23px 26px;
-      max-width: 850px;
+      max-width: 100%;
+      overflow: hidden;
     }
     .ai-card-text {
       font-size: 14px;
@@ -582,6 +583,101 @@
       background: transparent;
       padding-left: 4px;
     }
+    /* View Steps */
+    .view-steps {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      cursor: pointer;
+      padding: 8px 0;
+      margin-bottom: 8px;
+      background: none;
+      border: none;
+    }
+    .view-steps svg { width: 16px; height: 16px; transition: transform 0.2s; }
+    .view-steps.expanded svg { transform: rotate(180deg); }
+
+    /* HSD Sources Table */
+    .sources-filter-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      gap: 12px;
+    }
+    .sources-filter-input {
+      flex: 1;
+      max-width: 400px;
+      padding: 8px 14px;
+      border: 1px solid #D0D5DD;
+      border-radius: 8px;
+      font-family: var(--font);
+      font-size: 13px;
+      outline: none;
+    }
+    .sources-filter-input:focus { border-color: var(--brand); }
+    .sources-download-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: 1px solid #D0D5DD;
+      border-radius: 8px;
+      background: white;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+    .sources-download-btn:hover { border-color: var(--brand); }
+    .hsd-table-wrapper {
+      overflow-x: auto;
+      margin: 0 -4px;
+    }
+    .hsd-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font);
+      font-size: 13px;
+      min-width: 700px;
+    }
+    .hsd-table th {
+      text-align: left;
+      padding: 10px 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      border-bottom: 1px solid #EAECF0;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .hsd-table th svg { display: inline; vertical-align: middle; margin-left: 2px; }
+    .hsd-table td {
+      padding: 12px;
+      color: var(--text-primary);
+      border-bottom: 1px solid #F2F4F7;
+      vertical-align: top;
+    }
+    .hsd-table td a {
+      color: var(--brand);
+      text-decoration: underline;
+      font-weight: 500;
+    }
+    .hsd-table tr:hover td { background: #F9FAFB; }
+    .hsd-status {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+    .hsd-status.complete { color: #027A48; background: #ECFDF3; }
+    .hsd-status.rejected { color: #B42318; background: #FEF3F2; }
+    .hsd-status.open { color: #B54708; background: #FFFAEB; }
+
     .ai-card-actions {
       display: flex;
       align-items: center;
@@ -657,13 +753,7 @@
       margin-top: 10px;
     }
     .chat-input-fade {
-      position: absolute;
-      top: -63px;
-      left: 0;
-      right: 0;
-      height: 63px;
-      background: linear-gradient(to bottom, transparent, var(--bg));
-      pointer-events: none;
+      display: none;
     }
     .chat-input-container {
       background: var(--white);
@@ -1805,7 +1895,7 @@
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="#8B919C" stroke-width="2" stroke-linecap="round"/></svg>
                 </button>
               </div>
-              <svg class="image-plus-btn" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="16" height="16" rx="3" stroke="#8B919C" stroke-width="1.6"/><circle cx="9" cy="11.5" r="2" stroke="#8B919C" stroke-width="1.4"/><path d="M5 19l4.5-5.5 3.5 4h6" stroke="#8B919C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="19" y1="2" x2="19" y2="9" stroke="#8B919C" stroke-width="1.6" stroke-linecap="round"/><line x1="15.5" y1="5.5" x2="22.5" y2="5.5" stroke="#8B919C" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <svg class="image-plus-btn" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="16" height="14" rx="2.5" stroke="#8B919C" stroke-width="1.6"/><circle cx="7.5" cy="10" r="1.8" stroke="#8B919C" stroke-width="1.3"/><path d="M2 16l4-4.5 3 3.5 3.5-4.5L18 16" stroke="#8B919C" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="19.5" cy="6.5" r="4" fill="white" stroke="white" stroke-width="1"/><circle cx="19.5" cy="6.5" r="3.5" stroke="#8B919C" stroke-width="1.4"/><line x1="19.5" y1="4.5" x2="19.5" y2="8.5" stroke="#8B919C" stroke-width="1.4" stroke-linecap="round"/><line x1="17.5" y1="6.5" x2="21.5" y2="6.5" stroke="#8B919C" stroke-width="1.4" stroke-linecap="round"/></svg>
             </div>
             <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="Send">
               <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1927,6 +2017,142 @@
   function loadChat(el) {
     document.querySelectorAll('.history-item').forEach(item => item.classList.remove('active'));
     el.classList.add('active');
+
+    const title = el.querySelector('.history-item-text').textContent;
+
+    // Show chat, hide empty state
+    document.getElementById('emptyState').style.display = 'none';
+    const messages = document.getElementById('chatMessages');
+    messages.style.display = 'flex';
+
+    const sortIcon = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M3 7l3 3 3-3" stroke="#98A2B3" stroke-width="1.2" stroke-linecap="round"/></svg>';
+
+    messages.innerHTML = `
+      <!-- User message -->
+      <div class="message-row user">
+        <div class="message-avatar">TF</div>
+        <div class="user-bubble">${escapeHtml(title)}</div>
+        <div class="message-meta">
+          <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#86898B" stroke-width="1.5"/><text x="10" y="14" text-anchor="middle" fill="#86898B" font-size="11" font-family="Montserrat">i</text></svg>
+          3 Resources
+        </div>
+      </div>
+
+      <!-- View steps -->
+      <button class="view-steps" onclick="this.classList.toggle('expanded')">
+        View steps
+        <svg viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="#101828" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+
+      <!-- AI response -->
+      <div class="ai-card">
+        <div class="ai-card-text">
+          The picture features three tall towers. Lorem ipsum dolor sit amet consectetur. Cras natoque elit vulputate eu consectetur.Lorem ipsum dolor sit.
+        </div>
+        <div class="ai-card-divider"></div>
+        <div class="ai-card-footer">
+          <div class="sources-section">
+            <div class="sources-header">
+              <div class="sources-title">Used sources:</div>
+              <div class="ai-card-actions">
+                <div class="train-btn">
+                  Train your AI
+                  <svg viewBox="0 0 16 16" fill="none"><path d="M3 14V2l5 4 5-4v12l-5-4-5 4z" stroke="#667085" stroke-width="1.2"/></svg>
+                  <div class="train-stars">
+                    <span onclick="rate(this,1)">&#9733;</span>
+                    <span onclick="rate(this,2)">&#9733;</span>
+                    <span onclick="rate(this,3)">&#9733;</span>
+                    <span onclick="rate(this,4)">&#9733;</span>
+                    <span onclick="rate(this,5)">&#9733;</span>
+                  </div>
+                </div>
+                <button class="copy-btn" onclick="copyText(this)" title="Copy response">
+                  <svg width="15" height="16" viewBox="0 0 15 16" fill="none"><rect x="4" y="1" width="10" height="12" rx="2" stroke="#101828" stroke-width="1.5"/><path d="M1 5v8a2 2 0 002 2h6" stroke="#101828" stroke-width="1.5"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="sources-tabs" id="loadedSourcesTabs">
+              <span class="source-tab" onclick="switchSourceTab(this,'all')">All</span>
+              <span class="source-tab" onclick="switchSourceTab(this,'docs')">Projects, Wikis, My files <span class="tab-count">2</span></span>
+              <span class="source-tab" onclick="switchSourceTab(this,'code')">Code <span class="tab-count">15</span></span>
+              <span class="source-tab active" onclick="switchSourceTab(this,'hsd')">HSD <span class="tab-count">14</span></span>
+            </div>
+
+            <!-- HSD Table View -->
+            <div id="sourcesContent">
+              <div class="sources-filter-row">
+                <input class="sources-filter-input" type="text" placeholder="Filter" />
+                <button class="sources-download-btn">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2M8 2v8M5 7l3 3 3-3" stroke="#344054" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  Download
+                </button>
+              </div>
+              <div class="hsd-table-wrapper">
+              <table class="hsd-table">
+                <thead>
+                  <tr>
+                    <th>Ticket ID ${sortIcon}</th>
+                    <th>Title ${sortIcon}</th>
+                    <th>Release ${sortIcon}</th>
+                    <th>Component ${sortIcon}</th>
+                    <th>Owner ${sortIcon}</th>
+                    <th>Submitted date ${sortIcon}</th>
+                    <th>Status ${sortIcon}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><a href="#">234234234523</a></td>
+                    <td>INST_BUG: R_BPU_NOTAKEN_BEFORE_FAKE_TAKEN takes wrong indication to check taken branch before fake taken when fake taken is...</td>
+                    <td>pnc-a0</td>
+                    <td>pnc.ip.fe.bpu</td>
+                    <td>Guy Cohen</td>
+                    <td>15.3.24</td>
+                    <td><span class="hsd-status complete">Complete</span></td>
+                  </tr>
+                  <tr>
+                    <td><a href="#">234234234523</a></td>
+                    <td>RTL_BUG: chktag shadow CR f...</td>
+                    <td>pnc-a0</td>
+                    <td>pnc.ip.fe.bpu</td>
+                    <td>Guy Cohen</td>
+                    <td>15.3.24</td>
+                    <td><span class="hsd-status rejected">Rejected</span></td>
+                  </tr>
+                  <tr>
+                    <td><a href="#">987654321098</a></td>
+                    <td>PERF_BUG: Branch prediction accuracy degradation in nested loop scenarios with indirect jumps...</td>
+                    <td>pnc-a0</td>
+                    <td>pnc.ip.fe.bpu</td>
+                    <td>Dana Levy</td>
+                    <td>12.3.24</td>
+                    <td><span class="hsd-status open">Open</span></td>
+                  </tr>
+                  <tr>
+                    <td><a href="#">456789012345</a></td>
+                    <td>FUNC_BUG: Misaligned prefetch request causing cache line split in L2...</td>
+                    <td>pnc-b0</td>
+                    <td>pnc.ip.cache</td>
+                    <td>Amir Tal</td>
+                    <td>10.3.24</td>
+                    <td><span class="hsd-status complete">Complete</span></td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    messages.scrollTop = 0;
+  }
+
+  function switchSourceTab(el, tab) {
+    el.closest('.sources-tabs').querySelectorAll('.source-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    // In a real app this would switch content. For now keep showing HSD table for all tabs.
   }
 
   // ==================== NEW CHAT ====================
