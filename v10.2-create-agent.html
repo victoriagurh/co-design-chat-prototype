@@ -4347,7 +4347,7 @@ function checkGate(){
 <div id="createSkillModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:300;align-items:center;justify-content:center">
   <div style="background:white;border-radius:12px;padding:28px;width:520px;max-width:90vw;position:relative">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-      <h3 style="font-family:var(--font);font-size:18px;font-weight:700;color:var(--text-primary);margin:0">Write skill instructions</h3>
+      <h3 id="csModalTitle" style="font-family:var(--font);font-size:18px;font-weight:700;color:var(--text-primary);margin:0">Write skill instructions</h3>
       <button onclick="closeCreateSkillModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#667085;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px" onmouseover="this.style.background='#F2F4F7'" onmouseout="this.style.background='none'">&times;</button>
     </div>
     <div style="margin-bottom:16px">
@@ -5856,11 +5856,46 @@ function checkGate(){
     document.getElementById('uploadSkillModal').style.display = 'none';
   }
 
+  // Skill instructions per skill for edit mode
+  const skillInstructionsMap = {
+    'hsd_analysis': 'Analyze HSD tickets by extracting root cause, affected components, and severity. Cross-reference related tickets to identify patterns. Always include ticket IDs and output structured tables when comparing multiple issues.',
+    'code_review': 'Review code for synthesis issues, lint violations, clock domain crossings, and naming convention compliance. Explain reasoning behind each suggestion. Flag potential timing issues. Follow Intel RTL coding guidelines.',
+    'spec_compare': 'Compare two specification versions side by side. Output a diff table with change type (added/modified/removed). Flag breaking changes and assess downstream impact on dependent components.',
+    'test_gen': 'Generate comprehensive test plans based on feature specifications. Include test scenarios, expected results, pass/fail criteria, edge cases, and estimated effort. Prioritize coverage gaps.',
+    'signal_debug': 'Diagnose signal integrity issues by analyzing waveforms, identifying crosstalk, impedance mismatches, and reflection points. Provide specific fix recommendations with expected impact.',
+    'design_review': 'Validate designs against physical and electrical constraints. Run DRC checks, verify manufacturing rules compliance, and flag any constraint violations with severity and fix suggestions.',
+    'perf_bench': 'Run and compare performance benchmarks across configurations and generations. Output results in normalized tables. Identify bottlenecks and suggest optimization paths.',
+    'summarize': 'Summarize lengthy documents into concise actionable briefs. Structure output with key findings, action items, and open questions. Keep summaries under 30% of original length.',
+    'power_analysis': 'Analyze TDP budgets, power delivery network integrity, and thermal throttling thresholds. Compare against spec limits and flag any violations or margins below 10%.',
+    'rtl_lint': 'Run static analysis on RTL code for lint violations, synthesis warnings, and coding guideline compliance. Group findings by severity. Provide one-line fix suggestions for each issue.',
+    'timing_closure': 'Identify critical timing paths, analyze setup/hold violations, and recommend constraint adjustments or design changes. Prioritize by worst negative slack.',
+    'coverage_tracker': 'Track functional coverage metrics across verification runs. Identify coverage holes, suggest targeted tests to close gaps, and report progress toward coverage goals.'
+  };
+
   function openCreateSkillModal() {
     document.getElementById('createSkillModal').style.display = 'flex';
+    document.getElementById('csModalTitle').textContent = 'Write skill instructions';
     document.getElementById('csModalName').value = '';
     document.getElementById('csModalDesc').value = '';
     document.getElementById('csModalInstructions').value = '';
+    document.getElementById('csModalCreateBtn').textContent = 'Create';
+    document.getElementById('csModalCreateBtn').onclick = submitCreateSkillModal;
+    updateCreateSkillBtn();
+  }
+
+  function openEditSkillModal(idx) {
+    const skill = customizeSkillsData[idx];
+    if (!skill) return;
+    document.getElementById('createSkillModal').style.display = 'flex';
+    document.getElementById('csModalTitle').textContent = 'Edit skill instructions';
+    document.getElementById('csModalName').value = skill.name;
+    document.getElementById('csModalDesc').value = skill.desc;
+    document.getElementById('csModalInstructions').value = skillInstructionsMap[skill.id] || '';
+    document.getElementById('csModalCreateBtn').textContent = 'Save';
+    document.getElementById('csModalCreateBtn').onclick = function() {
+      closeCreateSkillModal();
+      showToast('Skill "' + skill.name + '" updated');
+    };
     updateCreateSkillBtn();
   }
   function closeCreateSkillModal() {
@@ -6114,7 +6149,7 @@ function checkGate(){
         <div class="customize-card-desc">${item.desc}</div>
         <div class="customize-card-footer">
           ${!isAgents && tagsArr.length ? '<span class="customize-card-used-by">Used by:</span>' : ''}${tags}
-          <button class="customize-card-edit" onclick="${isAgents ? `openEditAgent('${item.id}')` : `alert('Edit ${item.name} — coming soon')`}">Edit</button>
+          <button class="customize-card-edit" onclick="${isAgents ? `openEditAgent('${item.id}')` : `openEditSkillModal(${i})`}">Edit</button>
         </div>
       </div>`;
     });
