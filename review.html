@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Co-Design Chat — Prototype Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand: #0B99FF;
+      --brand-dark: #0067B4;
+      --brand-light: rgba(11, 153, 255, 0.08);
+      --bg: #F9FAFB;
+      --white: #FFFFFF;
+      --text-primary: #101828;
+      --text-secondary: #6E6E6E;
+      --text-muted: #86898B;
+      --border: #DADADA;
+      --shadow-sm: 0px 0px 10px 0px rgba(0,0,0,0.06);
+      --shadow-md: 0px 0px 20px 0px rgba(0,0,0,0.08);
+      --radius: 9px;
+      --font: 'Montserrat', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ==================== PASSWORD GATE ==================== */
+    #password-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pw-box {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--shadow-md);
+      padding: 40px;
+      text-align: center;
+      width: 360px;
+    }
+
+    .pw-box h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .pw-box p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .pw-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-family: var(--font);
+      font-size: 15px;
+      text-align: center;
+      letter-spacing: 8px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .pw-input:focus {
+      border-color: var(--brand);
+    }
+
+    .pw-btn {
+      width: 100%;
+      margin-top: 16px;
+      padding: 12px;
+      background: var(--brand);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .pw-btn:hover { background: var(--brand-dark); }
+
+    .pw-error {
+      color: #D92D20;
+      font-size: 13px;
+      margin-top: 12px;
+      display: none;
+    }
+
+    /* ==================== MAIN CONTENT ==================== */
+    #main-content {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .logo-icon {
+      margin-bottom: 24px;
+    }
+
+    .page-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .page-subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 48px;
+    }
+
+    .options {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .option-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 40px 36px;
+      width: 280px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .option-card:hover {
+      border-color: var(--brand);
+      box-shadow: 0px 0px 0px 3px rgba(11, 153, 255, 0.12), var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .option-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--brand-light);
+      color: var(--brand);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 20px;
+    }
+
+    .option-name {
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .option-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .option-arrow {
+      margin-top: 8px;
+      color: var(--brand);
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: all 0.2s ease;
+    }
+
+    .option-card:hover .option-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ==================== PASSWORD GATE ==================== -->
+<div id="password-gate">
+  <div class="pw-box">
+    <svg width="40" height="40" viewBox="0 0 36 36" fill="none" style="margin-bottom:16px">
+      <rect width="36" height="36" rx="8" fill="#0B99FF"/>
+      <path d="M10 18.5L15 23.5L26 12.5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <h2>Prototype Review</h2>
+    <p>Enter access code to continue</p>
+    <input class="pw-input" id="pw-input" type="password" maxlength="4" placeholder="••••" autofocus>
+    <button class="pw-btn" id="pw-btn">Enter</button>
+    <div class="pw-error" id="pw-error">Wrong code. Try again.</div>
+  </div>
+</div>
+
+<!-- ==================== MAIN CONTENT ==================== -->
+<div id="main-content">
+  <svg class="logo-icon" width="48" height="48" viewBox="0 0 36 36" fill="none">
+    <rect width="36" height="36" rx="8" fill="#0B99FF"/>
+    <path d="M10 18.5L15 23.5L26 12.5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <h1 class="page-title">Co-Design Chat</h1>
+  <p class="page-subtitle">Choose a concept to review</p>
+
+  <div class="options">
+    <a class="option-card" href="v10.2-create-agent.html">
+      <span class="option-label">Concept A</span>
+      <span class="option-name">v10.2</span>
+      <span class="option-desc">Create Agent — conversation-first approach</span>
+      <svg class="option-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <a class="option-card" href="v10.4-create-agent.html">
+      <span class="option-label">Concept B</span>
+      <span class="option-name">v10.4</span>
+      <span class="option-desc">Create Agent — structured builder approach</span>
+      <svg class="option-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+</div>
+
+<script>
+(function(){
+  // Skip gate on local files
+  if(location.protocol === 'file:') {
+    document.getElementById('password-gate').style.display = 'none';
+    document.getElementById('main-content').style.display = 'block';
+    return;
+  }
+
+  // Check session
+  if(sessionStorage.getItem('codesign-auth') === '1') {
+    document.getElementById('password-gate').style.display = 'none';
+    document.getElementById('main-content').style.display = 'block';
+    return;
+  }
+
+  function tryLogin() {
+    var val = document.getElementById('pw-input').value;
+    if(val === '4444') {
+      sessionStorage.setItem('codesign-auth', '1');
+      document.getElementById('password-gate').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+    } else {
+      document.getElementById('pw-error').style.display = 'block';
+      document.getElementById('pw-input').value = '';
+      document.getElementById('pw-input').focus();
+    }
+  }
+
+  document.getElementById('pw-btn').addEventListener('click', tryLogin);
+  document.getElementById('pw-input').addEventListener('keydown', function(e) {
+    if(e.key === 'Enter') tryLogin();
+  });
+})();
+</script>
+
+</body>
+</html>
