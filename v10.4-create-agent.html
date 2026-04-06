@@ -2316,6 +2316,19 @@
       gap: 16px;
       margin-left: auto;
     }
+    .ca-btn-cancel {
+      padding: 8px 22px;
+      border-radius: 20px;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      border: 1px solid #D0D5DD;
+      background: white;
+      color: var(--text-primary);
+    }
+    .ca-btn-cancel:hover { background: #F9FAFB; border-color: #98A2B3; }
     .ca-btn-create {
       padding: 8px 22px;
       border-radius: 20px;
@@ -2329,7 +2342,7 @@
       color: white;
     }
     .ca-btn-create:hover { background: var(--brand-dark); }
-    .ca-btn-create.disabled {
+    .ca-btn-create:disabled, .ca-btn-create.disabled {
       background: #B2DDFF;
       cursor: not-allowed;
       pointer-events: none;
@@ -3208,597 +3221,6 @@
       margin: 4px 0;
     }
 
-    /* ==================== CREATE SKILL ==================== */
-    .create-skill-page {
-      flex: 1;
-      display: none;
-      flex-direction: column;
-      min-width: 0;
-      background: var(--white);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-sm);
-      overflow: hidden;
-    }
-    .create-skill-page.active { display: flex; }
-
-    /* Skill type cards */
-    .cs-type-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .cs-type-card {
-      padding: 14px 16px;
-      border: 1.5px solid #EAECF0;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.15s;
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-    }
-    .cs-type-card:hover { border-color: #D0D5DD; background: #F9FAFB; }
-    .cs-type-card.selected { border-color: var(--brand); background: #EFF8FF; }
-    .cs-type-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 9px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      background: #F2F4F7;
-    }
-    .cs-type-card.selected .cs-type-icon { background: #E0D4FF; }
-    .cs-type-icon svg { width: 18px; height: 18px; }
-    .cs-type-info { flex: 1; min-width: 0; }
-    .cs-type-name {
-      font-family: var(--font);
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 2px;
-    }
-    .cs-type-desc {
-      font-family: var(--font);
-      font-size: 11.5px;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
-    .cs-type-card.selected .cs-type-name { color: var(--brand); }
-
-    /* Prompt template area */
-    .cs-template-box {
-      width: 100%;
-      min-height: 120px;
-      padding: 14px 16px;
-      border: 1px solid #EAECF0;
-      border-radius: 9px;
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 12.5px;
-      color: var(--text-primary);
-      outline: none;
-      resize: vertical;
-      line-height: 1.7;
-      transition: border-color 0.15s;
-      box-sizing: border-box;
-      background: #FAFBFC;
-    }
-    .cs-template-box:focus { border-color: var(--brand); background: var(--white); }
-    .cs-template-box::placeholder { color: var(--text-placeholder); font-family: var(--font); }
-
-    /* Variable pills */
-    .cs-vars-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 8px;
-    }
-    .cs-var-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 4px 10px;
-      border-radius: 6px;
-      background: #F2F4F7;
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 11px;
-      color: #667085;
-      cursor: default;
-    }
-    .cs-var-pill svg { width: 12px; height: 12px; }
-
-    /* Input params table */
-    .cs-params-table {
-      width: 100%;
-      border: 1px solid #EAECF0;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    .cs-params-header {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr 0.5fr 40px;
-      gap: 0;
-      padding: 8px 14px;
-      background: #F9FAFB;
-      border-bottom: 1px solid #EAECF0;
-      font-family: var(--font);
-      font-size: 11px;
-      font-weight: 600;
-      color: #667085;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-    }
-    .cs-params-row {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr 0.5fr 40px;
-      gap: 0;
-      padding: 10px 14px;
-      border-bottom: 1px solid #F2F4F7;
-      align-items: center;
-      font-family: var(--font);
-      font-size: 13px;
-      color: var(--text-primary);
-    }
-    .cs-params-row:last-child { border-bottom: none; }
-    .cs-param-name { font-weight: 500; }
-    .cs-param-type { color: #667085; font-size: 12px; }
-    .cs-param-required {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .cs-param-required .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
-    .cs-param-required .dot.yes { background: #12B76A; }
-    .cs-param-required .dot.no { background: #D0D5DD; }
-    .cs-param-remove {
-      width: 24px;
-      height: 24px;
-      border-radius: 6px;
-      border: none;
-      background: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #98A2B3;
-      transition: all 0.15s;
-    }
-    .cs-param-remove:hover { background: #FEE4E2; color: #F04438; }
-    .cs-add-param-btn {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 14px;
-      background: none;
-      border: none;
-      font-family: var(--font);
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--brand);
-      cursor: pointer;
-      transition: background 0.15s;
-      width: 100%;
-    }
-    .cs-add-param-btn:hover { background: #F9FAFB; }
-    .cs-add-param-btn svg { width: 14px; height: 14px; }
-
-    /* Output format */
-    .cs-output-grid {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .cs-output-chip {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 14px;
-      border: 1.5px solid #EAECF0;
-      border-radius: 8px;
-      font-family: var(--font);
-      font-size: 13px;
-      color: var(--text-primary);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .cs-output-chip:hover { border-color: #D0D5DD; background: #F9FAFB; }
-    .cs-output-chip.selected { border-color: #667085; background: #F2F4F7; color: #667085; }
-    .cs-output-chip svg { width: 16px; height: 16px; }
-
-    /* Agent access */
-    .cs-agent-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .cs-agent-chip {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border: 1px solid #EAECF0;
-      border-radius: 8px;
-      font-family: var(--font);
-      font-size: 13px;
-      color: var(--text-primary);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .cs-agent-chip:hover { border-color: var(--brand); background: #F9FAFB; }
-    .cs-agent-chip.selected { border-color: var(--brand); background: #EFF8FF; color: var(--brand); }
-    .cs-agent-chip .chip-check {
-      width: 16px;
-      height: 16px;
-      border-radius: 4px;
-      border: 1.5px solid #D0D5DD;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.15s;
-    }
-    .cs-agent-chip.selected .chip-check {
-      background: var(--brand);
-      border-color: var(--brand);
-    }
-
-    /* ==================== TOAST ==================== */
-    .toast {
-      position: fixed;
-      top: 70px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--white);
-      border-radius: 30px;
-      box-shadow: var(--shadow-toast);
-      padding: 13px 26px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 40px;
-      z-index: 200;
-      opacity: 0;
-      transition: opacity 0.3s, transform 0.3s;
-      pointer-events: none;
-    }
-    .toast.visible {
-      opacity: 1;
-      pointer-events: all;
-    }
-    .toast-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 14px;
-      font-weight: 500;
-    }
-    .toast-right {
-      display: flex;
-      align-items: center;
-      gap: 17px;
-    }
-    .toast-action {
-      font-size: 14px;
-      font-weight: 500;
-      color: #44677F;
-      cursor: pointer;
-      border: none;
-      background: none;
-      font-family: var(--font);
-    }
-    .toast-close {
-      width: 22px; height: 22px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      font-size: 18px;
-      color: var(--text-secondary);
-    }
-
-    /* ==================== SCROLL TO BOTTOM ==================== */
-    .scroll-bottom-btn {
-      position: absolute;
-      bottom: 120px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 40px; height: 40px;
-      background: var(--white);
-      border: 1.5px solid var(--brand);
-      border-radius: 7px;
-      box-shadow: var(--shadow-sm);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-      opacity: 0;
-      transition: opacity 0.2s;
-      pointer-events: none;
-    }
-    .scroll-bottom-btn.visible {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    /* ==================== TYPING ANIMATION ==================== */
-    .processing-indicator {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      flex: 1;
-      gap: 16px;
-      padding: 60px 20px;
-    }
-    .processing-spinner {
-      width: 36px;
-      height: 36px;
-      border: 3px solid #E4E7EC;
-      border-top-color: var(--brand);
-      border-radius: 50%;
-      animation: processingSpinn 0.8s linear infinite;
-    }
-    .processing-text {
-      font-family: var(--font);
-      font-size: 14px;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-    @keyframes processingSpinn {
-      to { transform: rotate(360deg); }
-    }
-
-    /* ==================== DRAFT AUTO-SAVE ==================== */
-    .cs-draft-indicator {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-family: var(--font);
-      font-size: 11px;
-      color: #98A2B3;
-      transition: opacity 0.3s;
-    }
-    .cs-draft-indicator svg { width: 13px; height: 13px; flex-shrink: 0; }
-    .cs-draft-indicator.just-saved { color: #16A34A; }
-    .cs-draft-banner {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 24px;
-      background: #FFFBEB;
-      border-bottom: 1px solid #FDE68A;
-      font-family: var(--font);
-      font-size: 13px;
-      color: #92400E;
-      flex-shrink: 0;
-    }
-    .cs-draft-banner svg { width: 18px; height: 18px; flex-shrink: 0; color: #D97706; }
-    .cs-draft-banner-actions { margin-left: auto; display: flex; gap: 8px; }
-    .cs-draft-banner-actions button {
-      padding: 5px 14px;
-      border-radius: 6px;
-      font-family: var(--font);
-      font-size: 12px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .cs-draft-resume {
-      background: #D97706;
-      color: white;
-      border: none;
-    }
-    .cs-draft-resume:hover { background: #B45309; }
-    .cs-draft-fresh {
-      background: white;
-      color: #344054;
-      border: 1px solid #D0D5DD;
-    }
-    .cs-draft-fresh:hover { background: #F9FAFB; }
-
-    /* ==================== TEST/TRY SKILL ==================== */
-    .cs-test-panel {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      overflow: hidden;
-    }
-    .cs-test-header {
-      padding: 16px 20px;
-      border-bottom: 1px solid #EAECF0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .cs-test-header svg { width: 16px; height: 16px; }
-    .cs-test-back {
-      margin-left: auto;
-      font-family: var(--font);
-      font-size: 12px;
-      color: var(--brand);
-      cursor: pointer;
-      background: none;
-      border: none;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .cs-test-back:hover { text-decoration: underline; }
-    .cs-test-body {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .cs-test-label {
-      font-family: var(--font);
-      font-size: 11px;
-      font-weight: 600;
-      color: #667085;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-      margin-bottom: 4px;
-    }
-    .cs-test-input {
-      width: 100%;
-      padding: 10px 14px;
-      border: 1px solid #EAECF0;
-      border-radius: 8px;
-      font-family: var(--font);
-      font-size: 12px;
-      color: var(--text-primary);
-      outline: none;
-      transition: border-color 0.15s;
-      box-sizing: border-box;
-      background: white;
-    }
-    .cs-test-input:focus { border-color: var(--brand); }
-    .cs-test-textarea {
-      width: 100%;
-      min-height: 80px;
-      padding: 10px 14px;
-      border: 1px solid #EAECF0;
-      border-radius: 8px;
-      font-family: var(--font);
-      font-size: 12px;
-      color: var(--text-primary);
-      outline: none;
-      resize: vertical;
-      transition: border-color 0.15s;
-      box-sizing: border-box;
-      background: white;
-      line-height: 1.5;
-    }
-    .cs-test-textarea:focus { border-color: var(--brand); }
-    .cs-test-run {
-      padding: 10px 20px;
-      background: var(--brand);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-family: var(--font);
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: background 0.15s;
-      width: 100%;
-    }
-    .cs-test-run:hover { background: var(--brand-dark); }
-    .cs-test-run:disabled { background: #B2DDFF; cursor: not-allowed; }
-    .cs-test-output {
-      padding: 16px;
-      background: #F0FDF4;
-      border: 1px solid #BBF7D0;
-      border-radius: 10px;
-      font-family: var(--font);
-      font-size: 12px;
-      color: #14532D;
-      line-height: 1.7;
-      white-space: pre-wrap;
-      animation: csFadeIn 0.3s ease;
-    }
-    .cs-test-output h4 {
-      font-size: 12px;
-      font-weight: 700;
-      margin: 0 0 6px;
-      color: #166534;
-    }
-    .cs-test-running {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 32px 16px;
-      font-family: var(--font);
-      font-size: 13px;
-      color: #667085;
-    }
-    @keyframes csFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* ==================== SHARE SKILL ==================== */
-    .cs-share-section {
-      margin-top: 24px;
-      width: 100%;
-      max-width: 400px;
-    }
-    .cs-share-label {
-      font-family: var(--font);
-      font-size: 12px;
-      font-weight: 600;
-      color: #344054;
-      margin-bottom: 10px;
-    }
-    .cs-share-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-    }
-    .cs-share-card {
-      padding: 12px;
-      border: 1.5px solid #EAECF0;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.15s;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-    }
-    .cs-share-card:hover { border-color: #D0D5DD; background: #F9FAFB; }
-    .cs-share-card.selected { border-color: var(--brand); background: #EFF8FF; }
-    .cs-share-card-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      background: #F2F4F7;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .cs-share-card.selected .cs-share-card-icon { background: #DBEAFE; }
-    .cs-share-card-icon svg { width: 16px; height: 16px; }
-    .cs-share-card-title {
-      font-family: var(--font);
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-    .cs-share-card.selected .cs-share-card-title { color: var(--brand); }
-    .cs-share-card-desc {
-      font-family: var(--font);
-      font-size: 10px;
-      color: #667085;
-      line-height: 1.3;
-    }
-    .cs-visibility-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 4px 10px;
-      border: 1px solid #EAECF0;
-      border-radius: 6px;
-      font-family: var(--font);
-      font-size: 12px;
-      color: #344054;
-      cursor: pointer;
-      transition: all 0.15s;
-      background: white;
-    }
-    .cs-visibility-toggle:hover { border-color: var(--brand); background: #F9FAFB; }
-    .cs-visibility-toggle svg { width: 12px; height: 12px; }
-
     /* ==================== RESPONSIVE ==================== */
 
     /* Medium screens: collapse sidebar, adjust spacing */
@@ -4534,35 +3956,11 @@ function checkGate(){
       </div>
     </div>
 
-    <!-- Create Skill Page — Conversational Builder -->
-    <div class="create-skill-page" id="createSkillPage">
-      <div class="create-agent-header">
-        <button class="create-agent-back" onclick="closeCreateSkill()">
-          <svg viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="#344054" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <h2 class="create-agent-title">Create Skill</h2>
-        <span class="create-agent-subtitle">Describe what you need and AI will build it</span>
-      </div>
-      <!-- State demo bar -->
-      <div style="display:flex;gap:6px;padding:8px 32px;background:#F9FAFB;border-bottom:1px solid #EAECF0;flex-shrink:0">
-        <span style="font-size:11px;color:#667085;font-weight:500;margin-right:4px;display:flex;align-items:center">States:</span>
-        <button onclick="showCsState('welcome')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #D0D5DD;background:white;cursor:pointer;font-family:var(--font);font-weight:500;color:#344054">Welcome</button>
-        <button onclick="showCsState('conversation')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #D0D5DD;background:white;cursor:pointer;font-family:var(--font);font-weight:500;color:#344054">Conversation</button>
-        <button onclick="showCsState('generating')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #D0D5DD;background:white;cursor:pointer;font-family:var(--font);font-weight:500;color:#344054">Generating</button>
-        <button onclick="showCsState('review')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #D0D5DD;background:white;cursor:pointer;font-family:var(--font);font-weight:500;color:#344054">Review</button>
-        <button onclick="showCsState('success')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #D0D5DD;background:white;cursor:pointer;font-family:var(--font);font-weight:500;color:#344054">Success</button>
-      </div>
-      <div style="display:flex;flex:1;overflow:hidden">
-        <!-- Chat panel (left) -->
-        <div id="csBuilderChat" style="flex:1;display:flex;flex-direction:column;overflow:hidden"></div>
-        <!-- Preview panel (right) -->
-        <div id="csBuilderPreview" style="width:380px;border-left:1px solid #EAECF0;flex-shrink:0;display:none;flex-direction:column;background:#FAFBFC;overflow:hidden"></div>
-      </div>
-      <div class="create-agent-footer" id="csBuilderFooter">
-        <div class="cs-draft-indicator" id="csDraftIndicator" style="display:none"></div>
-        <button class="ca-btn cancel" onclick="closeCreateSkill()">Cancel</button>
-        <div style="flex:1"></div>
-        <button class="ca-btn primary" id="createSkillSubmit" onclick="submitCreateSkill()" disabled>Create Skill</button>
+    <!-- Create Skill Page -->
+    <div class="create-agent-page" id="createSkillPage">
+      <div class="ca-header" id="csHeader"></div>
+      <div class="ca-left" style="flex:1;overflow-y:auto">
+        <div class="ca-left-content" id="csLeftContent"></div>
       </div>
     </div>
 
@@ -4650,34 +4048,6 @@ function checkGate(){
   </div>
 </div>
 
-<!-- Upload Skill Modal -->
-<div id="uploadSkillModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:300;align-items:center;justify-content:center">
-  <div style="background:white;border-radius:12px;padding:28px;width:480px;max-width:90vw;position:relative">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-      <h3 style="font-family:var(--font);font-size:18px;font-weight:700;color:var(--text-primary);margin:0">Upload skill</h3>
-      <button onclick="closeUploadSkillModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#667085;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px" onmouseover="this.style.background='#F2F4F7'" onmouseout="this.style.background='none'">&times;</button>
-    </div>
-    <div onclick="document.getElementById('uploadSkillFileInput').click()" style="border:2px dashed #D0D5DD;border-radius:10px;padding:40px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;cursor:pointer;transition:border-color 0.15s,background 0.15s;margin-bottom:24px" onmouseover="this.style.borderColor='var(--brand)';this.style.background='#F9FAFB'" onmouseout="this.style.borderColor='#D0D5DD';this.style.background='transparent'" ondragover="event.preventDefault();this.style.borderColor='var(--brand)';this.style.background='#EFF8FF'" ondragleave="this.style.borderColor='#D0D5DD';this.style.background='transparent'" ondrop="event.preventDefault();this.style.borderColor='#D0D5DD';this.style.background='transparent';showToast('File received')">
-      <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="8" y="12" width="32" height="24" rx="4" stroke="#D0D5DD" stroke-width="2"/><path d="M16 28h16M20 24h8" stroke="#D0D5DD" stroke-width="2" stroke-linecap="round"/></svg>
-      <span style="font-family:var(--font);font-size:14px;color:var(--text-primary)">Drag and drop or click to upload</span>
-      <input type="file" id="uploadSkillFileInput" accept=".zip,.skill" style="display:none" onchange="showToast('File selected')">
-    </div>
-    <div style="margin-bottom:16px">
-      <div style="font-family:var(--font);font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:8px">File requirements</div>
-      <ul style="font-family:var(--font);font-size:13px;color:var(--text-primary);padding-left:20px;margin:0;line-height:1.8">
-        <li>.zip or .skill file that includes a SKILL.md file at the root level</li>
-        <li>SKILL.md contains a skill name and description formatted in YAML</li>
-      </ul>
-    </div>
-    <div style="display:flex;align-items:center;gap:6px;font-family:var(--font);font-size:13px;color:var(--text-muted)">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#98A2B3" stroke-width="1.2"/><path d="M8 5v3M8 10v1" stroke="#98A2B3" stroke-width="1.5" stroke-linecap="round"/></svg>
-      <a style="color:var(--text-primary);text-decoration:underline;text-decoration-color:#D0D5DD;cursor:pointer;text-underline-offset:3px">Read more about creating skills</a>
-      <span>or</span>
-      <a style="color:var(--text-primary);text-decoration:underline;text-decoration-color:#D0D5DD;cursor:pointer;text-underline-offset:3px">see an example</a>
-    </div>
-  </div>
-</div>
-
 <!-- Customize Panel removed — now inline inside .main -->
 
 <!-- Toast notification -->
@@ -4706,7 +4076,7 @@ function checkGate(){
     document.getElementById('chatArea').style.display = 'none';
     document.getElementById('customizePage').classList.remove('active');
     document.getElementById('createAgentPage').classList.remove('active');
-    document.getElementById('createSkillPage').classList.remove('active');
+    document.getElementById('createSkillPage')?.classList.remove('active');
     const page = document.getElementById('resourcesPage');
     page.classList.add('active');
 
@@ -4765,7 +4135,7 @@ function checkGate(){
   function closeAllOverlayPages() {
     document.getElementById('customizePage').classList.remove('active');
     document.getElementById('createAgentPage').classList.remove('active');
-    document.getElementById('createSkillPage').classList.remove('active');
+    document.getElementById('createSkillPage')?.classList.remove('active');
     document.getElementById('resourcesPage').classList.remove('active');
     document.getElementById('chatArea').style.display = '';
   }
@@ -5068,7 +4438,7 @@ function checkGate(){
     const el = document.getElementById('emptyState');
     el.innerHTML = `
       <div class="empty-state-inner">
-        <div class="empty-state-title">What we are working on.</div>
+        <div class="empty-state-title">What can I do for you?</div>
       </div>
     `;
 
@@ -6207,11 +5577,20 @@ function checkGate(){
   }
 
   function openUploadSkillModal() {
-    document.getElementById('uploadSkillModal').style.display = 'flex';
+    alert('Upload skill — coming soon');
   }
-  function closeUploadSkillModal() {
-    document.getElementById('uploadSkillModal').style.display = 'none';
+  function closeUploadSkillModal() {}
+
+  function toggleNewSkillDropdown(e) {
+    e.stopPropagation();
+    const dd = document.getElementById('newSkillDropdown');
+    if (dd) dd.classList.toggle('open');
   }
+  function closeNewSkillDropdown() {
+    const dd = document.getElementById('newSkillDropdown');
+    if (dd) dd.classList.remove('open');
+  }
+  document.addEventListener('click', function() { closeNewSkillDropdown(); });
 
   // ==================== CUSTOMIZE ====================
   let customizeTab = 'agents';
@@ -6362,6 +5741,7 @@ function checkGate(){
     customizeTab = 'agents';
     document.getElementById('chatArea').style.display = 'none';
     document.getElementById('createAgentPage').classList.remove('active');
+    document.getElementById('createSkillPage')?.classList.remove('active');
     document.getElementById('resourcesPage').classList.remove('active');
     const page = document.getElementById('customizePage');
     page.classList.add('active');
@@ -6413,9 +5793,9 @@ function checkGate(){
             Add New Skill
           </button>
           <div class="new-skill-dropdown" id="newSkillDropdown">
-            <div class="new-skill-dropdown-item" onclick="openCreateSkill(); closeNewSkillDropdown()">
-              <div class="nsd-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="#344054" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-              <div class="nsd-text"><span class="nsd-title">Create New Skill</span><span class="nsd-desc">Build skills through conversation</span></div>
+            <div class="new-skill-dropdown-item" onclick="openCreateSkill('customize'); closeNewSkillDropdown()">
+              <div class="nsd-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="#344054" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+              <div class="nsd-text"><span class="nsd-title">Create New Skill</span><span class="nsd-desc">Build a skill from scratch</span></div>
             </div>
             <div class="new-skill-dropdown-item" onclick="openUploadSkillModal(); closeNewSkillDropdown()">
               <div class="nsd-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 14V4M8 7l4-3 4 3" stroke="#344054" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
@@ -6463,7 +5843,7 @@ function checkGate(){
           <div class="customize-card-tags-wrap">
             ${!isAgents && tagsArr.length ? '<span class="customize-card-used-by">Used by:</span>' : ''}${tags}
           </div>
-          <button class="customize-card-edit" onclick="${isAgents ? `openEditAgent('${item.id}')` : `alert('Edit ${item.name} — coming soon')`}">Edit</button>
+          <button class="customize-card-edit" onclick="${isAgents ? `openEditAgent('${item.id}')` : `openEditSkill('${item.id}')`}">Edit</button>
         </div>
       </div>`;
     });
@@ -6667,7 +6047,7 @@ function checkGate(){
           <svg viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="#344054" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <div class="ca-header-info">
-          <div class="ca-header-title">Custom Agent</div>
+          <div class="ca-header-title">Create New Agent</div>
         </div>
         <div class="ca-header-actions">
           <button class="ca-btn-share" onclick="showToast('Coming soon')">Share</button>
@@ -6811,7 +6191,7 @@ function checkGate(){
                     <svg viewBox="0 0 20 20" width="18" height="18" fill="none">${s.icon}</svg>
                     <span style="font-size:13px">${s.name}</span>
                   </div>
-                  <div class="skill-toggle-sm ${s.enabled ? 'on' : ''}" onclick="this.classList.toggle('on')"></div>
+                  <div class="skill-toggle-sm" onclick="this.classList.toggle('on')"></div>
                 </div>
               `).join('')}
             </div>
@@ -6924,17 +6304,13 @@ function checkGate(){
   function renderCaRightPanel() {
     const content = document.getElementById('caRightContent');
     if (!caAgentCreated) {
-      // Placeholder state with starter prompts
+      // Empty state — no content until agent is configured
       content.innerHTML = `
-        <div class="ca-preview-agent">
+        <div class="ca-preview-agent" style="justify-content:center;align-items:center;min-height:200px">
           <div class="ca-preview-avatar">
             <svg viewBox="0 0 22 22" fill="none">${gridPlaceholderSvg}</svg>
           </div>
-          <div class="ca-preview-name">${caAgentData.name}</div>
-          <div class="ca-preview-desc" style="color:var(--text-muted)">Configure your agent and test it here</div>
-          <div class="ca-preview-starters">
-            ${caAgentData.starters.map(s => `<div class="chip" onclick="fillCaPreviewInput('${s.replace(/'/g, "\\'")}')" style="cursor:pointer">${s}</div>`).join('')}
-          </div>
+          <div class="ca-preview-desc" style="color:var(--text-muted);text-align:center;margin-top:8px">Configure your agent to see a preview here</div>
         </div>`;
     } else {
       // Agent preview
@@ -7047,564 +6423,147 @@ function checkGate(){
     renderCaRightPanel();
   }
 
-  // ==================== CREATE SKILL — CONVERSATIONAL BUILDER ====================
-  let csBuilderState = 'welcome'; // welcome | conversation | generating | review | success
-  let csTestMode = false;
-  let csSkillVisibility = 'personal'; // personal | team | org
-  let csDraftData = null;
-  let csDraftTimestamp = null;
 
-  function saveCsDraft() {
-    if (csBuilderState === 'welcome' || csBuilderState === 'success') return;
-    csDraftData = { state: csBuilderState, visibility: csSkillVisibility };
-    csDraftTimestamp = new Date();
-    updateDraftIndicator(true);
-  }
+  // ==================== CREATE / EDIT SKILL ====================
+  let csEditingSkillId = null;
+  let csSkillCreated = false;
+  let csOpenedFrom = 'customize';
 
-  function clearCsDraft() {
-    csDraftData = null;
-    csDraftTimestamp = null;
-  }
+  const csSkillData = {
+    name: '',
+    description: '',
+    instructions: '',
+    createdBy: 'Victoria Gur Hochstein',
+    icon: null
+  };
 
-  function updateDraftIndicator(justSaved) {
-    const el = document.getElementById('csDraftIndicator');
-    if (!el) return;
-    if (!csDraftData) { el.style.display = 'none'; return; }
-    el.style.display = 'flex';
-    if (justSaved) {
-      el.classList.add('just-saved');
-      el.innerHTML = `<svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#16A34A" stroke-width="1.3"/><path d="M4.5 7l1.5 1.5 3-3" stroke="#16A34A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> Draft saved`;
-      setTimeout(() => {
-        el.classList.remove('just-saved');
-        el.innerHTML = `<svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#98A2B3" stroke-width="1.2"/><path d="M4.5 7l1.5 1.5 3-3" stroke="#98A2B3" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Draft saved`;
-      }, 2000);
+  const editSkillDataMap = {
+    hsd_analysis: {
+      name: 'hsd-analysis', description: 'Deep analysis of HSD tickets including root cause identification, cross-component impact assessment, and trend reporting.',
+      instructions: 'Analyze the following HSD ticket. Provide:\n1. Root cause analysis\n2. Cross-component impact\n3. Severity assessment\n4. Recommended fix\n\nKeep the analysis structured and actionable.',
+      createdBy: 'Intel', icon: skIcon.hsd
+    },
+    code_review: {
+      name: 'code-review', description: 'Automated code review with style checks, bug detection, security analysis, and best-practice recommendations.',
+      instructions: 'Review the provided code. Check for:\n1. Style violations\n2. Potential bugs\n3. Security issues\n4. Performance concerns\n5. Best practice adherence\n\nProvide specific line references and suggested fixes.',
+      createdBy: 'Intel', icon: skIcon.code
+    },
+    spec_compare: {
+      name: 'spec-compare', description: 'Side-by-side comparison of specification versions with highlighted deltas, risk assessment, and change summary.',
+      instructions: 'Compare the two spec versions provided. Highlight:\n1. Key changes between versions\n2. Risk assessment for each change\n3. Backward compatibility impact\n\nPresent as a structured delta report.',
+      createdBy: 'Victoria Gur Hochstein', icon: skIcon.spec
+    },
+    test_gen: {
+      name: 'test-generation', description: 'Generates comprehensive test plans and test cases based on specifications.',
+      instructions: 'Generate test cases based on the provided specification. Include:\n1. Functional tests\n2. Edge cases\n3. Regression scenarios\n4. Expected results\n\nFormat as a test plan document.',
+      createdBy: 'Intel', icon: skIcon.test
     }
-  }
+  };
 
-  function renderDraftBanner() {
-    if (!csDraftData) return '';
-    return `<div class="cs-draft-banner">
-      <svg viewBox="0 0 20 20" fill="none"><path d="M10 2v8l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/></svg>
-      You have an unsaved draft
-      <div class="cs-draft-banner-actions">
-        <button class="cs-draft-fresh" onclick="clearCsDraft();csBuilderState='welcome';renderCsBuilder()">Start fresh</button>
-        <button class="cs-draft-resume" onclick="csBuilderState=csDraftData.state;csSkillVisibility=csDraftData.visibility||'personal';renderCsBuilder()">Resume</button>
-      </div>
-    </div>`;
-  }
-
-  function openCreateSkill() {
-    csTestMode = false;
-    if (csDraftData) {
-      // Show welcome with draft banner
-      csBuilderState = 'welcome';
-    } else {
-      csBuilderState = 'welcome';
-    }
+  function openCreateSkill(from) {
+    csOpenedFrom = from || 'customize';
     document.getElementById('customizePage')?.classList.remove('active');
-    document.getElementById('chatArea')?.style.setProperty('display', 'none');
+    document.getElementById('chatArea').style.display = 'none';
     document.getElementById('createAgentPage')?.classList.remove('active');
-    document.getElementById('createSkillPage').classList.add('active');
-    renderCsBuilder();
+    const page = document.getElementById('createSkillPage');
+    page.classList.add('active');
+    csSkillCreated = false;
+    csEditingSkillId = null;
+    csSkillData.name = '';
+    csSkillData.description = '';
+    csSkillData.instructions = '';
+    csSkillData.icon = null;
+    csSkillData.createdBy = 'Victoria Gur Hochstein';
+    renderCsHeader();
+    renderCsLeftPanel();
+    // preview removed
   }
 
-  function toggleNewSkillDropdown(e) {
-    e.stopPropagation();
-    const dd = document.getElementById('newSkillDropdown');
-    if (dd) dd.classList.toggle('open');
+  function openEditSkill(skillId) {
+    const data = editSkillDataMap[skillId];
+    if (!data) { alert('Edit ' + skillId + ' — no data found'); return; }
+    csEditingSkillId = skillId;
+    csSkillCreated = true;
+    csSkillData.name = data.name;
+    csSkillData.description = data.description;
+    csSkillData.instructions = data.instructions || '';
+    csSkillData.createdBy = data.createdBy || 'Victoria Gur Hochstein';
+    csSkillData.icon = data.icon || null;
+    csOpenedFrom = 'customize';
+    document.getElementById('customizePage')?.classList.remove('active');
+    document.getElementById('chatArea').style.display = 'none';
+    document.getElementById('createAgentPage')?.classList.remove('active');
+    const page = document.getElementById('createSkillPage');
+    page.classList.add('active');
+    renderCsHeader();
+    renderCsLeftPanel();
+    // preview removed
   }
-  function closeNewSkillDropdown() {
-    const dd = document.getElementById('newSkillDropdown');
-    if (dd) dd.classList.remove('open');
-  }
-  document.addEventListener('click', function() { closeNewSkillDropdown(); });
 
   function closeCreateSkill() {
-    // Auto-save draft if closing mid-flow
-    if (csBuilderState !== 'welcome' && csBuilderState !== 'success') {
-      saveCsDraft();
-      showToast('Skill draft saved');
-    }
-    csTestMode = false;
     document.getElementById('createSkillPage').classList.remove('active');
-    document.getElementById('chatArea').style.removeProperty('display');
-    document.getElementById('chatArea').classList.add('new-session');
-    renderEmptyState();
-  }
-
-  function showCsState(state) {
-    csBuilderState = state;
-    csTestMode = false;
-    renderCsBuilder();
-    saveCsDraft();
-  }
-
-  function renderCsBuilder() {
-    const chat = document.getElementById('csBuilderChat');
-    const preview = document.getElementById('csBuilderPreview');
-    const footer = document.getElementById('csBuilderFooter');
-    const submitBtn = document.getElementById('createSkillSubmit');
-
-    // Show preview panel for review/generating states
-    const showPreview = csBuilderState === 'review' || csBuilderState === 'generating';
-    preview.style.display = showPreview ? 'flex' : 'none';
-
-    // Footer button state
-    if (submitBtn) submitBtn.disabled = csBuilderState !== 'review';
-
-    // ---- AI avatar helper ----
-    const aiAvatar = `<div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#0B99FF,#0067B4);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg viewBox="0 0 20 20" fill="none" style="width:18px;height:18px"><path d="M10 2l2.5 5h5L13 10.5l1.5 5.5L10 13l-4.5 3 1.5-5.5L2.5 7h5z" stroke="white" stroke-width="1.3" fill="none"/></svg></div>`;
-    const userAvatar = `<div style="width:36px;height:36px;border-radius:50%;background:var(--brand);display:flex;align-items:center;justify-content:center;color:white;font-size:14px;font-weight:600;flex-shrink:0">V</div>`;
-    const msgStyle = `font-family:var(--font);font-size:13.5px;color:#344054;line-height:1.65`;
-    const aiMsgWrap = `display:flex;gap:12px;align-items:flex-start`;
-    const userMsgWrap = `display:flex;gap:12px;align-items:flex-start;flex-direction:row-reverse`;
-    const aiBubble = `background:#F9FAFB;border:1px solid #EAECF0;border-radius:14px 14px 14px 4px;padding:14px 18px;max-width:480px`;
-    const userBubble = `background:linear-gradient(135deg,#0B99FF,#0080E0);color:white;border-radius:14px 14px 4px 14px;padding:12px 18px;max-width:420px;font-family:var(--font);font-size:13.5px;font-weight:500`;
-
-    // ---- Chat input ----
-    const chatInput = `
-      <div style="padding:16px 24px;border-top:1px solid #EAECF0;background:white;flex-shrink:0">
-        <div style="display:flex;gap:10px;align-items:center">
-          <input type="text" id="csBuilderInput" placeholder="Describe what you want this skill to do..." style="flex:1;padding:12px 16px;border:1px solid #D0D5DD;border-radius:25px;font-family:var(--font);font-size:13px;outline:none;transition:border-color 0.15s" onfocus="this.style.borderColor='var(--brand)'" onblur="this.style.borderColor='#D0D5DD'" onkeydown="if(event.key==='Enter'){csBuilderState='conversation';renderCsBuilder()}" />
-          <button onclick="csBuilderState='conversation';renderCsBuilder()" style="width:40px;height:40px;border-radius:50%;background:var(--brand);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg viewBox="0 0 16 16" fill="none" style="width:16px;height:16px"><path d="M2 8h12M10 4l4 4-4 4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-      </div>
-    `;
-
-    // ==================== WELCOME STATE ====================
-    if (csBuilderState === 'welcome') {
-      chat.innerHTML = `
-        ${renderDraftBanner()}
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px">
-          <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#0B99FF,#0067B4);display:flex;align-items:center;justify-content:center;margin-bottom:20px">
-            <svg viewBox="0 0 28 28" fill="none" style="width:28px;height:28px"><path d="M14 3l3.5 7h7L18 15l2 8-6-4.5L8 23l2-8-6.5-5h7z" stroke="white" stroke-width="1.5" fill="none"/></svg>
-          </div>
-          <h3 style="font-family:var(--font);font-size:20px;font-weight:700;color:#101828;margin-bottom:8px">Skill Builder</h3>
-          <p style="font-family:var(--font);font-size:14px;color:#667085;text-align:center;max-width:400px;margin-bottom:32px;line-height:1.6">
-            Tell me what you need and I'll create a skill for you. Describe the task, and I'll handle the configuration.
-          </p>
-          <div style="display:flex;flex-direction:column;gap:8px;width:100%;max-width:440px">
-            <div onclick="csBuilderState='conversation';renderCsBuilder()" style="padding:14px 18px;border:1px solid #EAECF0;border-radius:10px;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:12px;font-family:var(--font);font-size:13px;color:#344054" onmouseover="this.style.borderColor='#0B99FF';this.style.background='#F9FAFB'" onmouseout="this.style.borderColor='#EAECF0';this.style.background='white'">
-              <span style="font-size:18px">📊</span>
-              <div><strong>Analyze documents</strong><br><span style="color:#667085;font-size:12px">Summarize and extract insights from documents</span></div>
-              <svg viewBox="0 0 16 16" fill="none" style="width:16px;height:16px;margin-left:auto;flex-shrink:0;color:#D0D5DD"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <div onclick="csBuilderState='conversation';renderCsBuilder()" style="padding:14px 18px;border:1px solid #EAECF0;border-radius:10px;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:12px;font-family:var(--font);font-size:13px;color:#344054" onmouseover="this.style.borderColor='#0B99FF';this.style.background='#F9FAFB'" onmouseout="this.style.borderColor='#EAECF0';this.style.background='white'">
-              <span style="font-size:18px">✅</span>
-              <div><strong>Validate data</strong><br><span style="color:#667085;font-size:12px">Check data against rules and flag issues</span></div>
-              <svg viewBox="0 0 16 16" fill="none" style="width:16px;height:16px;margin-left:auto;flex-shrink:0;color:#D0D5DD"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <div onclick="csBuilderState='conversation';renderCsBuilder()" style="padding:14px 18px;border:1px solid #EAECF0;border-radius:10px;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:12px;font-family:var(--font);font-size:13px;color:#344054" onmouseover="this.style.borderColor='#0B99FF';this.style.background='#F9FAFB'" onmouseout="this.style.borderColor='#EAECF0';this.style.background='white'">
-              <span style="font-size:18px">📝</span>
-              <div><strong>Generate content</strong><br><span style="color:#667085;font-size:12px">Draft emails, reports, or documentation</span></div>
-              <svg viewBox="0 0 16 16" fill="none" style="width:16px;height:16px;margin-left:auto;flex-shrink:0;color:#D0D5DD"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </div>
-        </div>
-        ${chatInput}
-      `;
-      footer.style.display = 'none';
-      return;
-    }
-
-    footer.style.display = 'flex';
-    // Show draft indicator in footer for active states
-    setTimeout(() => updateDraftIndicator(false), 50);
-
-    // ==================== CONVERSATION STATE ====================
-    if (csBuilderState === 'conversation') {
-      chat.innerHTML = `
-        <div style="flex:1;overflow-y:auto;padding:24px 24px 16px;display:flex;flex-direction:column;gap:16px">
-          <!-- AI message 1 -->
-          <div style="${aiMsgWrap}">
-            ${aiAvatar}
-            <div style="${aiBubble}">
-              <div style="${msgStyle}">I'd like to help you create a new skill. Let's start with the basics.<br><br><strong>What should this skill do?</strong> Describe the main task in a sentence or two.</div>
-            </div>
-          </div>
-          <!-- User message 1 -->
-          <div style="${userMsgWrap}">
-            ${userAvatar}
-            <div style="${userBubble}">I need a skill that analyzes documents and gives me a structured summary with key findings, risks, and action items.</div>
-          </div>
-          <!-- AI message 2 -->
-          <div style="${aiMsgWrap}">
-            ${aiAvatar}
-            <div style="${aiBubble}">
-              <div style="${msgStyle}">Great, a document analysis skill. A few more questions:<br><br>
-              <strong>1. What types of documents?</strong> (financial reports, technical specs, meeting notes, any?)<br><br>
-              <strong>2. Should the output language match the input</strong>, or always be in English?<br><br>
-              <strong>3. Which agents should have access?</strong> All of them, or specific ones?</div>
-            </div>
-          </div>
-          <!-- User message 2 -->
-          <div style="${userMsgWrap}">
-            ${userAvatar}
-            <div style="${userBubble}">Any document type. Output in the same language as the input. All agents should be able to use it.</div>
-          </div>
-          <!-- AI message 3 with typing -->
-          <div style="${aiMsgWrap}">
-            ${aiAvatar}
-            <div style="${aiBubble}">
-              <div style="${msgStyle}">
-                Got it. I have enough to build this. Here's what I'll create:<br><br>
-                <div style="background:white;border:1px solid #E5E7EB;border-radius:8px;padding:12px;margin:8px 0">
-                  <strong>Document Analyzer</strong><br>
-                  <span style="color:#667085;font-size:12px">Type: Prompt Template</span><br>
-                  <span style="color:#667085;font-size:12px">Inputs: document_text, analysis_type, language</span><br>
-                  <span style="color:#667085;font-size:12px">Output: Structured text</span><br>
-                  <span style="color:#667085;font-size:12px">Access: All Agents</span>
-                </div>
-                Shall I generate it?
-              </div>
-              <div style="display:flex;gap:8px;margin-top:12px">
-                <button onclick="csBuilderState='generating';renderCsBuilder()" style="padding:8px 16px;background:var(--brand);color:white;border:none;border-radius:8px;font-family:var(--font);font-size:12px;font-weight:600;cursor:pointer">Yes, generate it</button>
-                <button style="padding:8px 16px;background:white;color:#344054;border:1px solid #D0D5DD;border-radius:8px;font-family:var(--font);font-size:12px;font-weight:500;cursor:pointer">Let me adjust</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        ${chatInput}
-      `;
-    }
-
-    // ==================== GENERATING STATE ====================
-    if (csBuilderState === 'generating') {
-      chat.innerHTML = `
-        <div style="flex:1;overflow-y:auto;padding:24px 24px 16px;display:flex;flex-direction:column;gap:16px">
-          <div style="${aiMsgWrap}">
-            ${aiAvatar}
-            <div style="${aiBubble}">
-              <div style="${msgStyle}">
-                <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-                  <div style="width:18px;height:18px;border:2px solid #E4E7EC;border-top-color:var(--brand);border-radius:50%;animation:processingSpinn 0.8s linear infinite"></div>
-                  <span style="font-weight:600">Generating your skill...</span>
-                </div>
-                <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:#667085">
-                  <div style="display:flex;align-items:center;gap:6px">
-                    <svg viewBox="0 0 14 14" fill="none" style="width:14px;height:14px"><circle cx="7" cy="7" r="5" stroke="#16A34A" stroke-width="1.3"/><path d="M4.5 7l1.5 1.5 3-3" stroke="#16A34A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span style="color:#16A34A">Creating prompt template</span>
-                  </div>
-                  <div style="display:flex;align-items:center;gap:6px">
-                    <svg viewBox="0 0 14 14" fill="none" style="width:14px;height:14px"><circle cx="7" cy="7" r="5" stroke="#16A34A" stroke-width="1.3"/><path d="M4.5 7l1.5 1.5 3-3" stroke="#16A34A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span style="color:#16A34A">Defining input parameters</span>
-                  </div>
-                  <div style="display:flex;align-items:center;gap:6px">
-                    <div style="width:14px;height:14px;border:1.5px solid #E4E7EC;border-top-color:var(--brand);border-radius:50%;animation:processingSpinn 0.8s linear infinite"></div>
-                    <span>Configuring output format...</span>
-                  </div>
-                  <div style="display:flex;align-items:center;gap:6px;opacity:0.4">
-                    <div style="width:14px;height:14px;border:1.5px solid #E4E7EC;border-radius:50%"></div>
-                    <span>Setting access permissions</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-
-      // Preview panel with partial content
-      preview.innerHTML = `
-        <div style="padding:16px 20px;border-bottom:1px solid #EAECF0;display:flex;align-items:center;gap:8px">
-          <svg viewBox="0 0 16 16" fill="none" style="width:16px;height:16px"><path d="M2 3h12v10H2z" stroke="#344054" stroke-width="1.3" rx="2"/><path d="M5 7h6M5 9.5h4" stroke="#344054" stroke-width="1.1" stroke-linecap="round"/></svg>
-          <span style="font-family:var(--font);font-size:14px;font-weight:600;color:#344054">Skill Preview</span>
-          <div style="width:14px;height:14px;border:1.5px solid #E4E7EC;border-top-color:var(--brand);border-radius:50%;animation:processingSpinn 0.8s linear infinite;margin-left:auto"></div>
-        </div>
-        <div style="flex:1;overflow-y:auto;padding:20px;opacity:0.6">
-          <div style="margin-bottom:16px">
-            <div style="font-size:11px;font-weight:600;color:#667085;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Name</div>
-            <div style="font-family:var(--font);font-size:14px;font-weight:600;color:#344054">Document Analyzer</div>
-          </div>
-          <div style="height:1px;background:#EAECF0;margin:12px 0"></div>
-          <div style="margin-bottom:16px">
-            <div style="font-size:11px;font-weight:600;color:#667085;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Type</div>
-            <div style="font-family:var(--font);font-size:13px;color:#344054">Prompt Template</div>
-          </div>
-          <div style="height:1px;background:#EAECF0;margin:12px 0"></div>
-          <div>
-            <div style="font-size:11px;font-weight:600;color:#667085;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Prompt</div>
-            <div style="font-family:'SF Mono','Fira Code',monospace;font-size:11px;color:#667085;padding:10px;background:#F2F4F7;border-radius:6px;line-height:1.6">Generating...</div>
-          </div>
-        </div>
-      `;
-
-      // Auto-advance to review after 2s
+    if (csOpenedFrom === 'customize') {
+      openCustomize();
       setTimeout(() => {
-        if (csBuilderState === 'generating') {
-          csBuilderState = 'review';
-          renderCsBuilder();
-        }
-      }, 2500);
-    }
-
-    // ==================== REVIEW STATE ====================
-    if (csBuilderState === 'review') {
-      const visLabel = csSkillVisibility === 'personal' ? 'Personal' : csSkillVisibility === 'team' ? 'My Team' : 'Organization';
-      chat.innerHTML = `
-        <div style="flex:1;overflow-y:auto;padding:24px 24px 16px;display:flex;flex-direction:column;gap:16px">
-          <div style="${aiMsgWrap}">
-            ${aiAvatar}
-            <div style="${aiBubble}">
-              <div style="${msgStyle}">
-                <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
-                  <svg viewBox="0 0 16 16" fill="none" style="width:16px;height:16px"><circle cx="8" cy="8" r="6" stroke="#16A34A" stroke-width="1.4"/><path d="M5.5 8l1.5 1.5 3-3" stroke="#16A34A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <strong style="color:#16A34A">Skill ready for review</strong>
-                </div>
-                Your <strong>Document Analyzer</strong> skill is ready. Check the preview on the right and let me know if you'd like any changes.<br><br>
-                When you're happy with it, click <strong>Create Skill</strong> to publish.
-              </div>
-              <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
-                <button style="padding:7px 14px;background:white;color:#344054;border:1px solid #D0D5DD;border-radius:8px;font-family:var(--font);font-size:12px;font-weight:500;cursor:pointer">Change the prompt</button>
-                <button style="padding:7px 14px;background:white;color:#344054;border:1px solid #D0D5DD;border-radius:8px;font-family:var(--font);font-size:12px;font-weight:500;cursor:pointer">Add a parameter</button>
-                <button style="padding:7px 14px;background:white;color:#344054;border:1px solid #D0D5DD;border-radius:8px;font-family:var(--font);font-size:12px;font-weight:500;cursor:pointer">Change access</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        ${chatInput}
-      `;
-
-      // Preview panel — test mode or skill preview
-      if (csTestMode) {
-        preview.innerHTML = renderTestPanel();
-      } else {
-        preview.innerHTML = `
-        <div style="padding:16px 20px;border-bottom:1px solid #EAECF0;display:flex;align-items:center;gap:8px">
-          <svg viewBox="0 0 16 16" fill="none" style="width:16px;height:16px"><path d="M2 3h12v10H2z" stroke="#344054" stroke-width="1.3" rx="2"/><path d="M5 7h6M5 9.5h4" stroke="#344054" stroke-width="1.1" stroke-linecap="round"/></svg>
-          <span style="font-family:var(--font);font-size:14px;font-weight:600;color:#344054">Skill Preview</span>
-          <span style="font-size:11px;color:#16A34A;font-weight:500;margin-left:auto;display:flex;align-items:center;gap:4px">
-            <svg viewBox="0 0 12 12" fill="none" style="width:12px;height:12px"><circle cx="6" cy="6" r="4" stroke="#16A34A" stroke-width="1.3"/><path d="M4 6l1.2 1.2 2.8-2.8" stroke="#16A34A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Ready
-          </span>
-        </div>
-        <div style="flex:1;overflow-y:auto;padding:20px">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
-            <div style="width:40px;height:40px;border-radius:10px;background:#EFF8FF;display:flex;align-items:center;justify-content:center;font-size:20px">📊</div>
-            <div>
-              <div style="font-family:var(--font);font-size:16px;font-weight:700;color:#101828">Document Analyzer</div>
-              <div style="font-family:var(--font);font-size:12px;color:#667085">Prompt Template</div>
-            </div>
-          </div>
-          <div style="font-family:var(--font);font-size:12px;color:#667085;margin-bottom:16px;line-height:1.5">Analyzes documents and provides structured summaries with key findings, risks, and recommended actions.</div>
-          <div style="height:1px;background:#EAECF0;margin:16px 0"></div>
-          <div style="margin-bottom:16px">
-            <div style="font-size:11px;font-weight:600;color:#667085;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Prompt Template</div>
-            <div style="font-family:'SF Mono','Fira Code',monospace;font-size:11px;color:#344054;padding:12px;background:#F2F4F7;border-radius:8px;line-height:1.7;white-space:pre-wrap">Analyze the following {{analysis_type}} document and provide a structured summary:
-
-{{document_text}}
-
-Provide your analysis in {{language}} with:
-1. Key findings
-2. Potential issues or risks
-3. Recommended actions</div>
-          </div>
-          <div style="height:1px;background:#EAECF0;margin:16px 0"></div>
-          <div style="margin-bottom:16px">
-            <div style="font-size:11px;font-weight:600;color:#667085;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Input Parameters</div>
-            <div style="border:1px solid #EAECF0;border-radius:8px;overflow:hidden">
-              <div style="display:grid;grid-template-columns:1fr 0.7fr 0.5fr;padding:8px 12px;background:#F9FAFB;border-bottom:1px solid #EAECF0;font-size:10px;font-weight:600;color:#667085;text-transform:uppercase;letter-spacing:0.3px">
-                <span>Name</span><span>Type</span><span>Required</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 0.7fr 0.5fr;padding:8px 12px;border-bottom:1px solid #F2F4F7;font-size:12px;font-family:var(--font)">
-                <span style="font-weight:500">document_text</span><span style="color:#667085">String</span><span><span style="width:8px;height:8px;border-radius:50%;background:#12B76A;display:inline-block"></span></span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 0.7fr 0.5fr;padding:8px 12px;border-bottom:1px solid #F2F4F7;font-size:12px;font-family:var(--font)">
-                <span style="font-weight:500">analysis_type</span><span style="color:#667085">String</span><span><span style="width:8px;height:8px;border-radius:50%;background:#12B76A;display:inline-block"></span></span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 0.7fr 0.5fr;padding:8px 12px;font-size:12px;font-family:var(--font)">
-                <span style="font-weight:500">language</span><span style="color:#667085">String</span><span><span style="width:8px;height:8px;border-radius:50%;background:#D0D5DD;display:inline-block"></span></span>
-              </div>
-            </div>
-          </div>
-          <div style="height:1px;background:#EAECF0;margin:16px 0"></div>
-          <div style="display:flex;gap:20px">
-            <div>
-              <div style="font-size:11px;font-weight:600;color:#667085;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Output</div>
-              <div style="font-family:var(--font);font-size:12px;color:#344054">Text</div>
-            </div>
-            <div>
-              <div style="font-size:11px;font-weight:600;color:#667085;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Access</div>
-              <div style="font-family:var(--font);font-size:12px;color:#344054">All Agents</div>
-            </div>
-            <div>
-              <div style="font-size:11px;font-weight:600;color:#667085;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Visibility</div>
-              <div class="cs-visibility-toggle" onclick="cycleVisibility()">
-                <svg viewBox="0 0 14 14" fill="none"><path d="M7 1C4 1 1.5 4 1 7c.5 3 3 6 6 6s5.5-3 6-6c-.5-3-3-6-6-6z" stroke="#667085" stroke-width="1.1"/><circle cx="7" cy="7" r="2" stroke="#667085" stroke-width="1.1"/></svg>
-                ${visLabel}
-                <svg viewBox="0 0 10 10" fill="none" style="width:10px;height:10px"><path d="M3 4l2 2 2-2" stroke="#667085" stroke-width="1.2" stroke-linecap="round"/></svg>
-              </div>
-            </div>
-          </div>
-          <div style="height:1px;background:#EAECF0;margin:16px 0"></div>
-          <button class="cs-test-run" onclick="csTestMode=true;renderCsBuilder()" style="width:auto;padding:9px 18px;font-size:12px;background:white;color:#344054;border:1px solid #D0D5DD;display:flex;align-items:center;gap:6px">
-            <svg viewBox="0 0 16 16" fill="none" style="width:14px;height:14px"><path d="M4 2l10 6-10 6V2z" stroke="#344054" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Try this skill
-          </button>
-        </div>
-      `;
-      }
-    }
-
-    // ==================== SUCCESS STATE ====================
-    if (csBuilderState === 'success') {
-      const visLabel = csSkillVisibility === 'personal' ? 'Personal' : csSkillVisibility === 'team' ? 'My Team' : 'Organization';
-      preview.style.display = 'none';
-      chat.innerHTML = `
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding:60px 40px;text-align:center">
-          <div style="width:72px;height:72px;border-radius:50%;background:#F0FDF4;display:flex;align-items:center;justify-content:center;margin-bottom:20px">
-            <svg viewBox="0 0 32 32" fill="none" style="width:36px;height:36px"><circle cx="16" cy="16" r="12" stroke="#16A34A" stroke-width="2.5"/><path d="M11 16l3 3 7-7" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <h3 style="font-family:var(--font);font-size:20px;font-weight:700;color:#101828;margin-bottom:8px">Skill Created Successfully</h3>
-          <p style="font-family:var(--font);font-size:14px;color:#667085;margin-bottom:4px;max-width:360px">
-            <strong>Document Analyzer</strong> is now available for all agents.
-          </p>
-          <p style="font-family:var(--font);font-size:13px;color:#98A2B3;margin-bottom:32px;max-width:360px">
-            You can manage this skill anytime from Customize > Skills.
-          </p>
-          <div style="display:flex;gap:10px">
-            <button onclick="closeCreateSkill()" class="ca-btn secondary" style="padding:10px 24px">Back to Chat</button>
-            <button onclick="csBuilderState='welcome';renderCsBuilder()" class="ca-btn primary" style="padding:10px 24px">Create Another</button>
-          </div>
-          <div style="margin-top:40px;padding:20px;background:#F9FAFB;border-radius:12px;border:1px solid #EAECF0;width:100%;max-width:400px;text-align:left">
-            <div style="font-family:var(--font);font-size:12px;font-weight:600;color:#344054;margin-bottom:12px">Skill Summary</div>
-            <div style="display:flex;flex-direction:column;gap:8px">
-              <div style="display:flex;justify-content:space-between;font-family:var(--font);font-size:12px"><span style="color:#667085">Name</span><span style="color:#344054;font-weight:500">Document Analyzer</span></div>
-              <div style="display:flex;justify-content:space-between;font-family:var(--font);font-size:12px"><span style="color:#667085">Type</span><span style="color:#344054;font-weight:500">Prompt Template</span></div>
-              <div style="display:flex;justify-content:space-between;font-family:var(--font);font-size:12px"><span style="color:#667085">Parameters</span><span style="color:#344054;font-weight:500">3 inputs</span></div>
-              <div style="display:flex;justify-content:space-between;font-family:var(--font);font-size:12px"><span style="color:#667085">Access</span><span style="color:#344054;font-weight:500">All Agents</span></div>
-              <div style="display:flex;justify-content:space-between;font-family:var(--font);font-size:12px"><span style="color:#667085">Visibility</span><span style="color:#344054;font-weight:500">${visLabel}</span></div>
-              <div style="display:flex;justify-content:space-between;font-family:var(--font);font-size:12px"><span style="color:#667085">Built by</span><span style="color:#344054;font-weight:500">AI Skill Builder</span></div>
-            </div>
-          </div>
-          <div class="cs-share-section">
-            <div class="cs-share-label">Share this skill</div>
-            <div class="cs-share-grid">
-              <div class="cs-share-card ${csSkillVisibility === 'personal' ? 'selected' : ''}" onclick="csSkillVisibility='personal';renderCsBuilder()">
-                <div class="cs-share-card-icon">
-                  <svg viewBox="0 0 16 16" fill="none"><path d="M8 8a3 3 0 100-6 3 3 0 000 6zM3 14c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="#344054" stroke-width="1.3" stroke-linecap="round"/></svg>
-                </div>
-                <div class="cs-share-card-title">Personal</div>
-                <div class="cs-share-card-desc">Only you can see and use this skill</div>
-              </div>
-              <div class="cs-share-card ${csSkillVisibility === 'team' ? 'selected' : ''}" onclick="csSkillVisibility='team';renderCsBuilder()">
-                <div class="cs-share-card-icon">
-                  <svg viewBox="0 0 16 16" fill="none"><path d="M6 7a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM1 14c0-2.5 2-4.5 5-4.5s5 2 5 4.5" stroke="#344054" stroke-width="1.2" stroke-linecap="round"/><path d="M11 6.5a2 2 0 100-4M15 14c0-2.2-1.5-4-4-4" stroke="#344054" stroke-width="1.2" stroke-linecap="round"/></svg>
-                </div>
-                <div class="cs-share-card-title">My Team</div>
-                <div class="cs-share-card-desc">Everyone on your team can use it</div>
-              </div>
-              <div class="cs-share-card ${csSkillVisibility === 'org' ? 'selected' : ''}" onclick="csSkillVisibility='org';renderCsBuilder()">
-                <div class="cs-share-card-icon">
-                  <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="2" stroke="#344054" stroke-width="1.2"/><path d="M5 7h6M5 10h4" stroke="#344054" stroke-width="1.1" stroke-linecap="round"/></svg>
-                </div>
-                <div class="cs-share-card-title">Organization</div>
-                <div class="cs-share-card-desc">Available to the entire org</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-      footer.innerHTML = `
-        <span style="font-family:var(--font);font-size:12px;color:#667085;display:flex;align-items:center;gap:6px">
-          <svg viewBox="0 0 14 14" fill="none" style="width:14px;height:14px"><circle cx="7" cy="7" r="5.5" stroke="#16A34A" stroke-width="1.3"/><path d="M4.5 7l1.5 1.5 3-3" stroke="#16A34A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Saved
-        </span>
-        <div style="flex:1"></div>
-        <button class="ca-btn secondary" onclick="closeCreateSkill()">Done</button>
-      `;
+        const skillsTab = document.querySelectorAll('.customize-tab')[1];
+        if (skillsTab) switchCustomizeTab(skillsTab, 'skills');
+      }, 50);
+    } else {
+      document.getElementById('chatArea').style.display = '';
+      document.getElementById('chatArea').classList.add('new-session');
+      renderEmptyState();
     }
   }
 
-  // ==================== TEST / TRY SKILL ====================
-  function renderTestPanel() {
-    return `
-      <div class="cs-test-panel">
-        <div class="cs-test-header">
-          <svg viewBox="0 0 16 16" fill="none"><path d="M4 2l10 6-10 6V2z" stroke="#344054" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span style="font-family:var(--font);font-size:14px;font-weight:600;color:#344054">Try Skill</span>
-          <button class="cs-test-back" onclick="csTestMode=false;renderCsBuilder()">
-            <svg viewBox="0 0 12 12" fill="none" style="width:12px;height:12px"><path d="M9 3L3 9M3 3l6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-            Back to preview
-          </button>
+  function renderCsHeader() {
+    const header = document.getElementById('csHeader');
+    const title = csSkillCreated ? csSkillData.name : 'Write skill instructions';
+    const actionBtn = csSkillCreated
+      ? `<button class="ca-btn-save" onclick="showToast('Skill saved');closeCreateSkill()">
+          <svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3 3 7-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Save
+        </button>`
+      : `<button class="ca-btn-create" id="csCreateBtn" disabled onclick="csSkillCreated=true;renderCsHeader();renderCsLeftPanel();showToast('Skill created')">Create</button>`;
+    header.innerHTML = `
+      <button class="ca-header-back" onclick="closeCreateSkill()">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="#344054" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <span class="ca-header-title">${title}</span>
+      <div class="ca-header-actions">
+        <button class="ca-btn-cancel" onclick="closeCreateSkill()">Cancel</button>
+        ${actionBtn}
+      </div>
+    `;
+  }
+
+  function renderCsLeftPanel() {
+    const container = document.getElementById('csLeftContent');
+    container.innerHTML = `
+      <div class="ca-configure">
+        <div class="ca-field">
+          <label>Skill name</label>
+          <input type="text" value="${csSkillCreated ? csSkillData.name : ''}" placeholder="weekly-status-report" oninput="csSkillData.name=this.value;checkCsFields();checkCsFields()" />
         </div>
-        <div class="cs-test-body">
-          <div>
-            <div class="cs-test-label">document_text <span style="color:#F04438">*</span></div>
-            <textarea class="cs-test-textarea" id="csTestDocInput" placeholder="Paste or type document content here...">The Q3 earnings report shows a 12% revenue increase YoY, driven primarily by cloud services growth. However, hardware margins declined by 3.2% due to supply chain constraints. The board recommends increasing R&amp;D allocation by 15% for next fiscal year.</textarea>
-          </div>
-          <div>
-            <div class="cs-test-label">analysis_type <span style="color:#F04438">*</span></div>
-            <input class="cs-test-input" id="csTestTypeInput" type="text" value="financial" placeholder="e.g. financial, technical, legal" />
-          </div>
-          <div>
-            <div class="cs-test-label">language</div>
-            <input class="cs-test-input" id="csTestLangInput" type="text" value="English" placeholder="e.g. English, Hebrew" />
-          </div>
-          <button class="cs-test-run" onclick="runSkillTest()">
-            <svg viewBox="0 0 16 16" fill="none" style="width:14px;height:14px"><path d="M4 2l10 6-10 6V2z" fill="white"/></svg>
-            Run skill
-          </button>
-          <div id="csTestResult"></div>
+
+        <div class="ca-field">
+          <label>Description</label>
+          <textarea rows="3" placeholder="Generate weekly status reports from recent work. Use when asked for updates or progress summaries." oninput="csSkillData.description=this.value;checkCsFields()">${csSkillCreated ? csSkillData.description : ''}</textarea>
+        </div>
+
+        <div class="ca-field">
+          <label>Instructions</label>
+          <textarea rows="8" placeholder="Summarize my recent work in three sections: wins, blockers, and next steps.\nKeep the tone professional but not stiff..." oninput="csSkillData.instructions=this.value;checkCsFields();checkCsFields()">${csSkillCreated ? csSkillData.instructions : ''}</textarea>
         </div>
       </div>
     `;
   }
 
-  function runSkillTest() {
-    const resultEl = document.getElementById('csTestResult');
-    if (!resultEl) return;
-    resultEl.innerHTML = `
-      <div class="cs-test-running">
-        <div style="width:16px;height:16px;border:2px solid #E4E7EC;border-top-color:var(--brand);border-radius:50%;animation:processingSpinn 0.8s linear infinite"></div>
-        Running skill...
-      </div>
-    `;
-    setTimeout(() => {
-      resultEl.innerHTML = `
-        <div class="cs-test-output">
-          <h4>Key Findings</h4>
-          1. Revenue grew 12% year-over-year, primarily from cloud services
-          2. Hardware margins dropped 3.2% due to supply chain issues
-          3. Board recommends 15% R&D budget increase for next FY
-
-          <h4>Potential Risks</h4>
-          1. Continued supply chain pressure may further erode hardware margins
-          2. Heavy reliance on cloud growth creates single-segment dependency
-          3. R&D increase will impact short-term profitability
-
-          <h4>Recommended Actions</h4>
-          1. Diversify supply chain partnerships to reduce margin pressure
-          2. Evaluate cloud pricing strategy to sustain growth trajectory
-          3. Tie R&D spend increase to specific product milestones with quarterly reviews
-        </div>
-      `;
-    }, 2200);
+  function checkCsFields() {
+    const btn = document.getElementById('csCreateBtn');
+    if (!btn) return;
+    const hasName = csSkillData.name && csSkillData.name.trim();
+    btn.disabled = !hasName;
   }
-
-  // ==================== VISIBILITY CYCLE ====================
-  function cycleVisibility() {
-    const order = ['personal', 'team', 'org'];
-    const idx = order.indexOf(csSkillVisibility);
-    csSkillVisibility = order[(idx + 1) % order.length];
-    renderCsBuilder();
-  }
-
-  function submitCreateSkill() {
-    clearCsDraft();
-    csBuilderState = 'success';
-    csTestMode = false;
-    renderCsBuilder();
-  }
-
-  function saveSkillDraft() {
-    showToast('Skill draft saved');
-    closeCreateSkill();
-  }
-
-  function validateCreateSkill() {}
 
   // ==================== INIT ====================
   function initResourceStates() {

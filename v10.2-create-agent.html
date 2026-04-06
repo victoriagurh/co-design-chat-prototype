@@ -6378,7 +6378,7 @@ function checkGate(){
           <svg viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="#344054" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <div class="ca-header-info">
-          <div class="ca-header-title">Custom Agent</div>
+          <div class="ca-header-title">Create New Agent</div>
         </div>
         <div class="ca-header-actions">
           <button class="ca-btn-share" onclick="showToast('Coming soon')">Share</button>
@@ -6522,7 +6522,7 @@ function checkGate(){
                     <svg viewBox="0 0 20 20" width="18" height="18" fill="none">${s.icon}</svg>
                     <span style="font-size:13px">${s.name}</span>
                   </div>
-                  <div class="skill-toggle-sm ${s.enabled ? 'on' : ''}" onclick="this.classList.toggle('on')"></div>
+                  <div class="skill-toggle-sm" onclick="this.classList.toggle('on')"></div>
                 </div>
               `).join('')}
             </div>
@@ -6636,17 +6636,13 @@ function checkGate(){
   function renderCaRightPanel() {
     const content = document.getElementById('caRightContent');
     if (!caAgentCreated) {
-      // Placeholder state with starter prompts
+      // Empty state — no content until agent is configured
       content.innerHTML = `
-        <div class="ca-preview-agent">
+        <div class="ca-preview-agent" style="justify-content:center;align-items:center;min-height:200px">
           <div class="ca-preview-avatar">
             <svg viewBox="0 0 22 22" fill="none">${gridPlaceholderSvg}</svg>
           </div>
-          <div class="ca-preview-name">${caAgentData.name}</div>
-          <div class="ca-preview-desc" style="color:var(--text-muted)">Configure your agent and test it here</div>
-          <div class="ca-preview-starters">
-            ${caAgentData.starters.map(s => { const t = typeof s === 'string' ? s : s.short; return `<div class="chip" onclick="fillCaPreviewInput('${t.replace(/'/g, "\\'")}')" style="cursor:pointer">${t}</div>`; }).join('')}
-          </div>
+          <div class="ca-preview-desc" style="color:var(--text-muted);text-align:center;margin-top:8px">Configure your agent to see a preview here</div>
         </div>`;
     } else {
       // Agent preview
