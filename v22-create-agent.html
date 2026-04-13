@@ -4189,6 +4189,7 @@
 <script>
 (function(){
   if(location.protocol==='file:'){return;}
+  if(new URLSearchParams(window.location.search).get('state')){return;}
   if(sessionStorage.getItem('codesign-auth')==='1'){return;}
   var gate=document.getElementById('password-gate');
   gate.style.display='block';
@@ -9230,6 +9231,40 @@ Core behaviors:
 
   // ==================== INIT ====================
   renderEmptyState();
+
+  // ==================== URL STATE ROUTER (for Figma import) ====================
+  (function(){
+    var params = new URLSearchParams(window.location.search);
+    var state = params.get('state');
+    if(!state) return;
+    // Skip password gate
+    var gate = document.getElementById('password-gate');
+    if(gate) gate.style.display='none';
+    document.querySelector('.app').style.display='flex';
+
+    setTimeout(function(){
+      switch(state){
+        case 'main': break; // default chat view
+        case 'share': openSharePopover('test','agent',null); break;
+        case 'delete': showDeleteConfirm('HSD Analysis Agent','agent',function(){}); break;
+        case 'customize-agents': openCustomize(); break;
+        case 'customize-skills': openCustomize(); setTimeout(function(){ var tabs=document.querySelectorAll('.customize-tab'); for(var i=0;i<tabs.length;i++){if(tabs[i].textContent.includes('Skills')){tabs[i].click();break;}} },100); break;
+        case 'customize-instructions': openCustomize(); setTimeout(function(){ var tabs=document.querySelectorAll('.customize-tab'); for(var i=0;i<tabs.length;i++){if(tabs[i].textContent.includes('Workspace')){tabs[i].click();break;}} },100); break;
+        case 'skill-preview': openCustomize(); setTimeout(function(){ var tabs=document.querySelectorAll('.customize-tab'); for(var i=0;i<tabs.length;i++){if(tabs[i].textContent.includes('Skills')){tabs[i].click();break;}} setTimeout(function(){ openSkillPreview(0); },150); },100); break;
+        case 'create-agent': document.getElementById('createAgentPage').classList.add('active'); break;
+        case 'skill-library': openBrowseSkillsModal(); break;
+        case 'create-skill-modal': openCreateSkillModal(); break;
+        case 'upload-skill': openUploadSkillModal(); break;
+        case 'skill-picker': openSkillPicker(); break;
+        case 'agent-dropdown': toggleModeDropdown(); break;
+        case 'actions-dropdown': toggleContextDropdown(); break;
+        case 'resources': openWorkspaceResources(); break;
+        case 'sidebar-collapsed': toggleSidebar(); break;
+        case 'create-skill-testing': document.getElementById('createSkillPage').classList.add('active'); setTimeout(function(){ var btns=document.getElementById('createSkillPage').querySelectorAll('button'); for(var i=0;i<btns.length;i++){if(btns[i].textContent.trim()==='Testing'){btns[i].click();break;}} },100); break;
+        case 'create-skill-success': document.getElementById('createSkillPage').classList.add('active'); setTimeout(function(){ var btns=document.getElementById('createSkillPage').querySelectorAll('button'); for(var i=0;i<btns.length;i++){if(btns[i].textContent.trim()==='Success'){btns[i].click();break;}} },100); break;
+      }
+    }, 200);
+  })();
 </script>
 </body>
 </html>
