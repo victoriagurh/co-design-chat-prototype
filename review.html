@@ -221,13 +221,21 @@
     <path d="M10 18.5L15 23.5L26 12.5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
   <h1 class="page-title">Co-Design Chat</h1>
-  <p class="page-subtitle">Choose a concept to review</p>
+  <p class="page-subtitle">Choose a version to review</p>
 
   <div class="options">
-    <a class="option-card" href="v22-create-agent.html">
+    <a class="option-card" href="v_inline_01.4.html">
       <span class="option-label">Latest</span>
-      <span class="option-name">v22</span>
-      <span class="option-desc">Create Agent</span>
+      <span class="option-name">v_inline_01.4</span>
+      <span class="option-desc">Inline Create Agent</span>
+      <svg class="option-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <a class="option-card" href="v_inline_01.3.2.html">
+      <span class="option-label">Previous</span>
+      <span class="option-name">v_inline_01.3.2</span>
+      <span class="option-desc">Inline Create Agent</span>
       <svg class="option-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
@@ -237,17 +245,17 @@
 
 <script>
 (function(){
-  var TARGET = 'v22-create-agent.html';
-
-  // Skip gate on local files
+  // Skip gate on local files — show picker directly
   if(location.protocol === 'file:') {
-    window.location.href = TARGET;
+    document.getElementById('password-gate').style.display = 'none';
+    document.getElementById('main-content').style.display = 'block';
     return;
   }
 
   // Check session
   if(sessionStorage.getItem('codesign-auth') === '1') {
-    window.location.href = TARGET;
+    document.getElementById('password-gate').style.display = 'none';
+    document.getElementById('main-content').style.display = 'block';
     return;
   }
 
@@ -255,7 +263,8 @@
     var val = document.getElementById('pw-input').value;
     if(val === '4444') {
       sessionStorage.setItem('codesign-auth', '1');
-      window.location.href = TARGET;
+      document.getElementById('password-gate').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
     } else {
       document.getElementById('pw-error').style.display = 'block';
       document.getElementById('pw-input').value = '';
