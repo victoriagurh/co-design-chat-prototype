@@ -259,17 +259,17 @@
 
 <script>
 (function(){
-  // Skip gate on local files — show picker directly
+  var TARGET = 'v_01.html';
+
+  // Skip gate on local files
   if(location.protocol === 'file:') {
-    document.getElementById('password-gate').style.display = 'none';
-    document.getElementById('main-content').style.display = 'block';
+    window.location.href = TARGET;
     return;
   }
 
   // Check session
   if(sessionStorage.getItem('codesign-auth') === '1') {
-    document.getElementById('password-gate').style.display = 'none';
-    document.getElementById('main-content').style.display = 'block';
+    window.location.href = TARGET;
     return;
   }
 
@@ -277,8 +277,7 @@
     var val = document.getElementById('pw-input').value;
     if(val === '4444') {
       sessionStorage.setItem('codesign-auth', '1');
-      document.getElementById('password-gate').style.display = 'none';
-      document.getElementById('main-content').style.display = 'block';
+      window.location.href = TARGET;
     } else {
       document.getElementById('pw-error').style.display = 'block';
       document.getElementById('pw-input').value = '';
