@@ -173,7 +173,7 @@
 
     /* ==================== SIDEBAR ==================== */
     .sidebar {
-      width: 260px;
+      width: 300px;
       background: var(--white);
       border-radius: var(--radius);
       box-shadow: var(--shadow-sm);
@@ -6193,113 +6193,34 @@
       font-weight: 500;
     }
 
-    /* Hover popup */
+    /* Hover tooltip — path only */
     .badge-popup {
       position: fixed;
       z-index: 500;
-      background: var(--white);
-      border: 1px solid #E4E7EC;
-      border-radius: 9px;
-      box-shadow: 0 8px 24px rgba(16, 24, 40, 0.12);
-      width: 320px;
-      padding: 14px 16px;
-      pointer-events: auto;
+      background: #1C1C1E;
+      border-radius: 5px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
+      max-width: 480px;
+      padding: 5px 10px;
+      pointer-events: none;
       opacity: 0;
       transform: translateY(4px);
       transition: opacity 0.12s, transform 0.12s;
       visibility: hidden;
+      white-space: nowrap;
     }
     .badge-popup.visible {
       opacity: 1;
       transform: translateY(0);
       visibility: visible;
     }
-    /* Information hierarchy (top → bottom):
-       1. Source name (strongest) — "What is it?"
-       2. Project subtitle (secondary) — "Where does it live?"
-       3. Type label (categorical) — "What kind of source?"
-       4. Description preview (content) — "Why is it relevant?"
-       5. Footer actions (interaction) — "How do I continue?"           */
-    .badge-popup-name {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-primary);
-      margin-bottom: 2px;
-      line-height: 18px;
-    }
-    .badge-popup-subtitle {
-      font-size: 11px;
-      font-weight: 400;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-      line-height: 15px;
-    }
-    .badge-popup-preview {
-      font-size: 12px;
-      color: var(--text-secondary);
-      line-height: 17px;
-      margin-bottom: 14px;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .badge-popup-footer {
-      display: flex;
-      align-items: center;
-      padding-top: 12px;
-      border-top: 1px solid #F2F4F7;
-      gap: 10px;
-    }
-    /* Type chip sits in the bottom-left corner of the popup.
-       "Open in new tab" (when present) is pinned to the right. */
-    .badge-popup-type {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 10px;
-      font-weight: 500;
-      color: #475467;
-      background: var(--hover);
-      padding: 3px 8px;
-      border-radius: 12px;
-      letter-spacing: 0.4px;
-    }
-    .badge-popup-type svg { width: 11px; height: 11px; }
-    .badge-popup-footer .badge-popup-link {
-      margin-left: auto;
-    }
-    /* Popup actions: both "View details" and "Open in new tab" are minimal
-       text links with the same visual weight. No buttons inside a hover popup. */
-    .badge-popup-actions {
-      display: inline-flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .badge-popup-link,
-    button.badge-popup-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      color: var(--text-secondary);
+    .badge-path {
       font-family: var(--font);
       font-size: 11px;
       font-weight: 400;
-      line-height: 14px;
-      text-decoration: none;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-      transition: color 0.12s;
-    }
-    .badge-popup-link svg {
-      flex-shrink: 0;
-      display: block;
-    }
-    .badge-popup-link:hover {
-      color: var(--text-primary);
-      text-decoration: underline;
+      color: #FFFFFF;
+      line-height: 16px;
+      letter-spacing: 0.1px;
     }
 
     /* ==================== RIGHT SIDE PANEL ==================== */
@@ -6314,13 +6235,13 @@
       position: relative;
     }
     .sources-panel.open {
-      width: 480px;
+      width: 460px;
     }
     .sources-panel.resizing {
       transition: none;
     }
     .sources-panel-inner {
-      width: 480px;
+      width: 460px;
       height: 100%;
       display: flex;
       flex-direction: column;
@@ -14198,69 +14119,27 @@ Core behaviors:
   function showBadgePopup(badge) {
     clearTimeout(popupTimer);
     const ref = badge.getAttribute('data-ref');
-    let preview = SOURCE_PREVIEWS[ref];
-    if (!preview) return;
 
-    const isUnavailable = badge.classList.contains('unavailable');
-    let name, type, url;
+    let path = '';
     if (ref === 'hsd-group') {
-      const hsds = getSourcesForContext().hsd;
-      const hsdCount = hsds.length;
-      name = `${hsdCount} HSD ticket${hsdCount !== 1 ? 's' : ''}`;
-      type = 'HSD';
-      // One ticket → direct HSDES URL. Many → HSDES filtered search
-      if (hsdCount === 1) {
-        url = hsds[0].url;
-      } else if (hsdCount > 1) {
-        const components = [...new Set(hsds.map(t => t.component))].join(',');
-        url = `https://hsdes.intel.com/appstore/article/#/?release=lnc-d0&component=${encodeURIComponent(components)}`;
-      } else {
-        url = null;
-      }
-      // Dynamic preview based on how many tickets the current conversation uses
-      preview = {
-        subtitle: 'heia_soc.bugeco',
-        preview: `${hsdCount} HSD ticket${hsdCount !== 1 ? 's' : ''} tagged against core.pm.pdn and core.ip.fe.bpu.`,
-      };
+      path = 'hsdes.intel.com / heia_soc.bugeco';
     } else if (ref === 'uf-pdn-cal') {
-      name = 'pdn_calibration.docx';
-      type = 'MY FILE';
-      url = null;
+      path = 'pdn_calibration.docx';
     } else {
       const res = getSourceByRef(ref);
       if (!res) return;
-      name = res.data.name;
-      type = TYPE_LABEL[res.type];
-      url = res.data.url || null;
+      const d = res.data;
+      if (res.type === 'code' && d.file_path) {
+        path = d.file_path;
+      } else if (d.url) {
+        path = d.url.replace(/^https?:\/\//, '');
+      } else {
+        path = d.name;
+      }
     }
 
     const p = popup();
-    const subtitleHtml = preview.subtitle
-      ? `<div class="badge-popup-subtitle">${escapeHtml(preview.subtitle)}</div>`
-      : '';
-    // External link to the original source document/system.
-    // "View source" = generic, concise label; arrow icon signals external nav.
-    const linkHtml = (url && !isUnavailable)
-      ? `<a class="badge-popup-link" href="${url}" target="_blank" onclick="event.stopPropagation()">View source <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M4 10L10 4M5 4h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>`
-      : '';
-    const unavailableHtml = isUnavailable
-      ? `<div class="badge-popup-unavailable"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3"/><line x1="3.5" y1="7" x2="10.5" y2="7" stroke="currentColor" stroke-width="1.3"/></svg>Resource unavailable in shared conversation</div>`
-      : '';
-    // Footer: type chip pinned left, "Open in new tab" pinned right (when applicable)
-    const footerHtml = `
-      <div class="badge-popup-footer">
-        <span class="badge-popup-type">${TYPE_ICON[typeToKey(type)]}${type}</span>
-        ${linkHtml}
-      </div>
-    `;
-
-    p.innerHTML = `
-      <div class="badge-popup-name">${escapeHtml(name)}</div>
-      ${subtitleHtml}
-      <div class="badge-popup-preview">${escapeHtml(preview.preview)}</div>
-      ${footerHtml}
-      ${unavailableHtml}
-    `;
+    p.innerHTML = `<span class="badge-path">${escapeHtml(path)}</span>`;
 
     const rect = badge.getBoundingClientRect();
     p.classList.add('visible');
@@ -14307,9 +14186,6 @@ Core behaviors:
       badge.addEventListener('mouseenter', () => showBadgePopup(badge));
       badge.addEventListener('mouseleave', hideBadgePopup);
     });
-    const p = popup();
-    p.addEventListener('mouseenter', () => clearTimeout(popupTimer));
-    p.addEventListener('mouseleave', hideBadgePopup);
   }
 
   // ==================== PANEL OPEN/CLOSE ====================
@@ -15363,7 +15239,7 @@ Core behaviors:
           <div class="diagram-syntax-body">
             <div class="diagram-syntax-toolbar">
               <div class="diagram-syntax-toolbar-left">
-                <button class="diagram-syntax-icon-btn" title="Copy" onclick="diagramCopySyntax('${id}')">
+                <button class="diagram-syntax-icon-btn" data-copy-btn title="Copy" onclick="diagramCopySyntax('${id}')">
                   <svg viewBox="0 0 16 16" fill="none"><rect x="4" y="3" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M2 6v6a2 2 0 002 2h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
                 </button>
                 <button class="diagram-syntax-icon-btn" data-undo-btn title="Undo last regeneration" onclick="diagramUndoVersion('${id}')" style="display:none">
@@ -15498,7 +15374,7 @@ Core behaviors:
           <div class="diagram-syntax-body">
             <div class="diagram-syntax-toolbar">
               <div class="diagram-syntax-toolbar-left">
-                <button class="diagram-syntax-icon-btn" title="Copy" onclick="diagramCopySyntax('${id}')">
+                <button class="diagram-syntax-icon-btn" data-copy-btn title="Copy" onclick="diagramCopySyntax('${id}')">
                   <svg viewBox="0 0 16 16" fill="none"><rect x="4" y="3" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M2 6v6a2 2 0 002 2h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
                 </button>
                 <button class="diagram-syntax-icon-btn" data-undo-btn title="Undo last regeneration" onclick="diagramUndoVersion('${id}')" style="display:none">
@@ -15864,7 +15740,12 @@ Core behaviors:
     const card = document.getElementById(id);
     const text = card.dataset.syntax || '';
     navigator.clipboard.writeText(text).catch(() => {});
-    showDiagramStatus(id, 'success', 'Copied to clipboard');
+    const btn = card.querySelector('[data-copy-btn]');
+    if (!btn) return;
+    const copyIcon = `<svg viewBox="0 0 16 16" fill="none"><rect x="4" y="3" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M2 6v6a2 2 0 002 2h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>`;
+    const checkIcon = `<svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    btn.innerHTML = checkIcon;
+    trackTimer(setTimeout(() => { btn.innerHTML = copyIcon; }, 1500));
   }
 
   // Make the syntax content editable from the moment the panel opens.
@@ -16513,7 +16394,11 @@ Core behaviors:
 
   // ===== State auto-loader (URL-param triggered, for Figma export) =====
   // Generic params, opt-in via URL:
-  //   ?session=<key>            clicks history item (narrative, multi, pcie, thermal)
+  //   ?session=<key>            clicks history item (tpl-ccp-pdn, tpl-cache-coherency, …)
+  //   ?panel=<filter>           opens Sources panel with filter: all | spec | user_file | code | hsd
+  //   ?detail=<type>:<id>       opens Sources panel detail view, e.g. spec:spec-lnc-ccp
+  //   ?detail=hsd-group         opens Sources panel HSD table view
+  //   ?expand=1                 expands Sources panel to center/full-page view (use with ?detail=hsd-group)
   //   ?stamps=0,1,2             stamps "Last updated" on diagram cards at these indices
   //   ?edit=0,1                 opens the diagram-syntax panel (edit mode) on cards at these indices
   //   ?fullscreen=0             opens diagram in fullscreen view at this index
@@ -16530,6 +16415,9 @@ Core behaviors:
   (function autoState() {
     const params = new URLSearchParams(window.location.search);
     const session = params.get('session');
+    const panel = params.get('panel');
+    const detail = params.get('detail');
+    const expand = params.get('expand') === '1';
     const stamps = params.get('stamps');
     const edits = params.get('edit');
     const fullscreen = params.get('fullscreen');
@@ -16537,7 +16425,7 @@ Core behaviors:
     const delay = parseInt(params.get('delay') || '1200', 10);
     const reportReady = params.get('ready') === '1';
     const exportFlag = params.get('export');
-    if (!session && !stamps && !edits && !fullscreen && !cot && !reportReady && !exportFlag) return;
+    if (!session && !panel && !detail && !stamps && !edits && !fullscreen && !cot && !reportReady && !exportFlag) return;
 
     // Inject export-mode CSS immediately — unfreeze heights so the captured frame
     // includes the entire scrollable conversation, not a 900px slice.
@@ -16550,7 +16438,9 @@ Core behaviors:
       "html.exporting .main { overflow: visible !important; }" +
       "html.exporting .chat-area { overflow: visible !important; height: auto !important; min-height: 0 !important; }" +
       "html.exporting .chat-messages { overflow: visible !important; max-height: none !important; flex: none !important; height: auto !important; }" +
-      "html.exporting .chat-area.new-session { justify-content: flex-start !important; }";
+      "html.exporting .chat-area.new-session { justify-content: flex-start !important; }" +
+      "html.exporting .sources-panel { position: relative !important; transform: none !important; right: auto !important; }" +
+      "html.exporting .sources-panel-backdrop { display: none !important; }";
     (document.head || document.documentElement).appendChild(injectStyle);
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -16593,6 +16483,28 @@ Core behaviors:
           // scroll container, but this protects against a stale scrollTop value.
           var msgs = document.getElementById('chatMessages');
           if (msgs) msgs.scrollTop = 0;
+
+          // Sources panel: ?panel=<filter> or ?detail=<type>:<id> / ?detail=hsd-group
+          if (panel && typeof openSourcesPanel === 'function') {
+            openSourcesPanel(panel);
+          }
+          if (detail && typeof openSourceDetail === 'function') {
+            // Open panel first (all view) so history and state are set correctly
+            if (typeof openSourcesPanel === 'function') openSourcesPanel('all');
+            setTimeout(function() {
+              var parts = detail.split(':');
+              if (parts.length === 2) {
+                openSourceDetail(parts[0], parts[1]);
+              } else {
+                openSourceDetail(detail);
+              }
+              // ?expand=1 — expand to center view after table renders
+              if (expand && typeof togglePanelView === 'function') {
+                setTimeout(togglePanelView, 200);
+              }
+            }, 300);
+          }
+
           if (reportReady) window.__exportReady = true;
         }, delay);
       }, 200);
