@@ -15239,7 +15239,7 @@ Core behaviors:
           <div class="diagram-syntax-body">
             <div class="diagram-syntax-toolbar">
               <div class="diagram-syntax-toolbar-left">
-                <button class="diagram-syntax-icon-btn" title="Copy" onclick="diagramCopySyntax('${id}')">
+                <button class="diagram-syntax-icon-btn" data-copy-btn title="Copy" onclick="diagramCopySyntax('${id}')">
                   <svg viewBox="0 0 16 16" fill="none"><rect x="4" y="3" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M2 6v6a2 2 0 002 2h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
                 </button>
                 <button class="diagram-syntax-icon-btn" data-undo-btn title="Undo last regeneration" onclick="diagramUndoVersion('${id}')" style="display:none">
@@ -15374,7 +15374,7 @@ Core behaviors:
           <div class="diagram-syntax-body">
             <div class="diagram-syntax-toolbar">
               <div class="diagram-syntax-toolbar-left">
-                <button class="diagram-syntax-icon-btn" title="Copy" onclick="diagramCopySyntax('${id}')">
+                <button class="diagram-syntax-icon-btn" data-copy-btn title="Copy" onclick="diagramCopySyntax('${id}')">
                   <svg viewBox="0 0 16 16" fill="none"><rect x="4" y="3" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M2 6v6a2 2 0 002 2h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
                 </button>
                 <button class="diagram-syntax-icon-btn" data-undo-btn title="Undo last regeneration" onclick="diagramUndoVersion('${id}')" style="display:none">
@@ -15740,7 +15740,12 @@ Core behaviors:
     const card = document.getElementById(id);
     const text = card.dataset.syntax || '';
     navigator.clipboard.writeText(text).catch(() => {});
-    showDiagramStatus(id, 'success', 'Copied to clipboard');
+    const btn = card.querySelector('[data-copy-btn]');
+    if (!btn) return;
+    const copyIcon = `<svg viewBox="0 0 16 16" fill="none"><rect x="4" y="3" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M2 6v6a2 2 0 002 2h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>`;
+    const checkIcon = `<svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    btn.innerHTML = checkIcon;
+    trackTimer(setTimeout(() => { btn.innerHTML = copyIcon; }, 1500));
   }
 
   // Make the syntax content editable from the moment the panel opens.
