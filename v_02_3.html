@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Co-Design Chat, Prototype</title>
+  <title>Co-Design Chat · V02.3 Responsive</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
@@ -5994,19 +5994,11 @@
 
     /* ==================== RESPONSIVE ==================== */
 
-    /* Medium screens: collapse sidebar, adjust spacing */
+    /* Medium screens: adjust spacing (sidebar handled by breakpoint system) */
     @media (max-width: 1024px) {
       .main {
         padding: 16px 20px;
         gap: 20px;
-      }
-      .sidebar {
-        width: 240px;
-        padding: 18px 14px;
-      }
-      .sidebar.collapsed {
-        width: 48px;
-        padding: 12px 8px;
       }
       .topbar {
         padding: 16px 20px;
@@ -6044,14 +6036,11 @@
       }
     }
 
-    /* Small screens: hide sidebar, full width content */
+    /* Small screens: adjust spacing (sidebar handled by drawer system) */
     @media (max-width: 768px) {
       .main {
         padding: 12px;
         gap: 0;
-      }
-      .sidebar {
-        display: none;
       }
       .topbar {
         padding: 12px 16px;
