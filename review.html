@@ -237,16 +237,29 @@
         <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </a>
+    <a class="option-card" href="v_03_3.html">
+      <span class="option-name">3.3</span>
+      <span class="option-desc">
+        <span>Contradiction Finder</span>
+        <span>Inline Resources</span>
+        <span>Diagram tool</span>
+        <span>Agent Task Flow</span>
+      </span>
+      <svg class="option-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
   </div>
 </div>
 
 <script>
 (function(){
   function enter() {
-    window.location.href = 'v_03_4.html';
+    document.getElementById('password-gate').style.display = 'none';
+    document.getElementById('main-content').style.display = 'block';
   }
 
-  // Skip gate on local file:// — go directly
+  // Skip gate on local file:// — show cards directly
   if (location.protocol === 'file:') {
     enter();
     return;
