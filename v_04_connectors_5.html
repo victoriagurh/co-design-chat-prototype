@@ -14461,7 +14461,7 @@ function checkGate(){
     const demoViewsHtml = `<div style="display:flex;align-items:center;gap:8px;margin:0 0 20px;font-family:var(--font);font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px">
       DEMO VIEWS
       <span style="width:1px;height:12px;background:var(--border)"></span>
-      <button class="customize-demo-btn" onclick="showConnectorErrorState('empty')" style="color:var(--text-primary);background:none;border:1px solid #EAECF0;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:12px;font-weight:500">Empty</button>
+      <button class="customize-demo-btn" onclick="showConnectorErrorState('auth_expired')" style="color:var(--text-primary);background:none;border:1px solid #EAECF0;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:12px;font-weight:500">Auth expired</button>
       <button class="customize-demo-btn" onclick="showConnectorErrorState('signin')" style="color:var(--text-primary);background:none;border:1px solid #EAECF0;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:12px;font-weight:500">Sign-in Error</button>
       <button class="customize-demo-btn" onclick="showConnectorErrorState('general')" style="color:var(--text-primary);background:none;border:1px solid #EAECF0;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:12px;font-weight:500">General Error</button>
     </div>`;
@@ -14967,9 +14967,10 @@ function checkGate(){
     const ov = document.getElementById('connectorConsentOverlay');
     if (!ov) return;
 
-    if (stateType === 'empty') {
-      // Show the normal entry state
-      ccFlow = { id: 'm365', mode: 'connect', step: 'entry' };
+    if (stateType === 'auth_expired') {
+      // Show reconnect flow with auth expired banner
+      m365.status = 'needs_permission';
+      ccFlow = { id: 'm365', mode: 'reconnect', step: 'entry' };
       ov.querySelector('.cc-modal').innerHTML = ccEntryOAuth(m365);
     } else if (stateType === 'signin') {
       // Show sign-in error
