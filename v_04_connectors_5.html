@@ -14458,8 +14458,15 @@ function checkGate(){
         <div>Link external services to give Co-Design access to your data.</div>
         <div style="white-space:nowrap">Every connector is read-only and runs as you, so it sees only what you can see.</div>
       </div>`;
+    const demoViewsHtml = `<div style="display:flex;align-items:center;gap:8px;margin:0 0 20px;font-family:var(--font);font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px">
+      DEMO VIEWS
+      <span style="width:1px;height:12px;background:var(--border)"></span>
+      <button class="customize-demo-btn" onclick="showConnectorErrorState('empty')" style="color:var(--text-primary);background:none;border:1px solid #EAECF0;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:12px;font-weight:500">Empty</button>
+      <button class="customize-demo-btn" onclick="showConnectorErrorState('signin')" style="color:var(--text-primary);background:none;border:1px solid #EAECF0;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:12px;font-weight:500">Sign-in Error</button>
+      <button class="customize-demo-btn" onclick="showConnectorErrorState('general')" style="color:var(--text-primary);background:none;border:1px solid #EAECF0;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:12px;font-weight:500">General Error</button>
+    </div>`;
     const cards = customizeConnectorsData.map(renderConnectorCard).join('');
-    return title + intro + `<div class="customize-grid">${cards}</div>`;
+    return title + intro + demoViewsHtml + `<div class="customize-grid">${cards}</div>`;
   }
 
   function renderConnectorCard(c) {
@@ -14949,6 +14956,32 @@ function checkGate(){
     const cp = document.getElementById('connectorsPopover');
     if (cp) cp.classList.remove('open');
     openConnector(id);
+  }
+
+  // Demo states for Connectors tab
+  function showConnectorErrorState(stateType) {
+    const m365 = customizeConnectorsData.find(x => x.id === 'm365');
+    if (!m365) return;
+
+    closeCardMenus();
+    const ov = document.getElementById('connectorConsentOverlay');
+    if (!ov) return;
+
+    if (stateType === 'empty') {
+      // Show the normal entry state
+      ccFlow = { id: 'm365', mode: 'connect', step: 'entry' };
+      ov.querySelector('.cc-modal').innerHTML = ccEntryOAuth(m365);
+    } else if (stateType === 'signin') {
+      // Show sign-in error
+      ccFlow = { id: 'm365', mode: 'connect', step: 'error_signin' };
+      ov.querySelector('.cc-modal').innerHTML = ccErrorSignIn(m365);
+    } else if (stateType === 'general') {
+      // Show general error
+      ccFlow = { id: 'm365', mode: 'connect', step: 'error_general', reason: 'Failed to verify your credentials. Please check and try again.' };
+      ov.querySelector('.cc-modal').innerHTML = ccErrorGeneral(m365, ccFlow.reason);
+    }
+
+    ov.style.display = 'flex';
   }
 
   // Test helpers for error states
