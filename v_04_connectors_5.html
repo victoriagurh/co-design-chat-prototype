@@ -14615,7 +14615,7 @@ function checkGate(){
     ccViewId = null;
   }
 
-  const ccBtnBase = 'border-radius:8px;padding:10px 22px;font-family:var(--font);font-size:14px;cursor:pointer';
+  const ccBtnBase = 'display:flex;align-items:center;justify-content:center;min-height:40px;border-radius:8px;padding:10px 22px;font-family:var(--font);font-size:14px;cursor:pointer;white-space:nowrap';
   function ccPrimary(label, onclick) { return `<button onclick="${onclick}" style="${ccBtnBase};font-weight:600;background:var(--brand);color:white;border:none">${label}</button>`; }
   function ccGhost(label, onclick) { return `<button onclick="${onclick}" style="${ccBtnBase};font-weight:500;background:none;color:var(--text-secondary);border:none">${label}</button>`; }
 
