@@ -14856,7 +14856,7 @@ function checkGate(){
     const errorIcon = '<svg viewBox="0 0 24 24" fill="none" style="width:32px;height:32px"><circle cx="12" cy="12" r="10" stroke="#D92D20" stroke-width="2"/><path d="M12 7v5M12 16v0.5" stroke="#D92D20" stroke-width="2" stroke-linecap="round"/></svg>';
     return ccHeader(c, 'Sign-in failed') +
       `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 20px 8px;gap:14px;text-align:center"><div>${errorIcon}</div><div><div style="font-family:var(--font);font-size:16px;font-weight:600;color:var(--text-primary)">Couldn't sign in</div><div style="font-family:var(--font);font-size:13px;color:var(--text-muted);margin-top:4px">Something went wrong during the sign-in process. Check your credentials and try again.</div></div></div>` +
-      `<div style="display:flex;gap:12px;justify-content:flex-end;margin-top:16px">${ccSecondary('Cancel', 'closeConnectorConsent()')}${ccPrimary('Try again', 'ccRetrySignIn()')}</div>`;
+      `<div style="display:flex;gap:12px;justify-content:flex-end;align-items:center;margin-top:16px">${ccSecondary('Cancel', 'closeConnectorConsent()')}${ccPrimary('Try again', 'ccRetrySignIn()')}</div>`;
   }
 
   function ccErrorGeneral(c, reason) {
@@ -14864,7 +14864,7 @@ function checkGate(){
     const msg = reason || 'Failed to establish a connection. This may be temporary.';
     return ccHeader(c, 'Connection error') +
       `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 20px 8px;gap:14px;text-align:center"><div>${errorIcon}</div><div><div style="font-family:var(--font);font-size:16px;font-weight:600;color:var(--text-primary)">Connection error</div><div style="font-family:var(--font);font-size:13px;color:var(--text-muted);margin-top:4px">${msg}</div></div></div>` +
-      `<div style="display:flex;gap:12px;justify-content:flex-end;margin-top:16px">${ccSecondary('Cancel', 'closeConnectorConsent()')}${ccPrimary('Retry', 'ccRetryConnection()')}</div>`;
+      `<div style="display:flex;gap:12px;justify-content:flex-end;align-items:center;margin-top:16px">${ccSecondary('Cancel', 'closeConnectorConsent()')}${ccPrimary('Retry', 'ccRetryConnection()')}</div>`;
   }
 
   function ccRetrySignIn() {
