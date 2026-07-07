@@ -221,14 +221,24 @@
     <path d="M10 18.5L15 23.5L26 12.5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
   <h1 class="page-title">Co-Design Chat</h1>
-  <p class="page-subtitle">Choose a version to review</p>
+  <p class="page-subtitle">Choose an approach to review</p>
 
   <div class="options">
-    <a class="option-card" href="git_v_04_connectors_5.html">
-      <span class="option-label">Latest</span>
-      <span class="option-name">4 · Connectors 5</span>
+    <a class="option-card" href="git_v_inline_01_5.html">
+      <span class="option-label">Option 1</span>
+      <span class="option-name">Two-Step Navigation</span>
       <span class="option-desc">
-        <span>Connectors</span>
+        <span>Open a resource on its own detail page</span>
+      </span>
+      <svg class="option-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <a class="option-card" href="git_v_inline_01_6.html">
+      <span class="option-label">Option 2</span>
+      <span class="option-name">Expand / Collapse</span>
+      <span class="option-desc">
+        <span>Expand a resource inline, no separate page</span>
       </span>
       <svg class="option-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -240,10 +250,11 @@
 <script>
 (function(){
   function enter() {
-    window.location.href = 'git_v_04_connectors_5.html';
+    document.getElementById('password-gate').style.display = 'none';
+    document.getElementById('main-content').style.display = 'block';
   }
 
-  // Skip gate on local file:// — show cards directly
+  // Skip gate on local file:// — show choice cards directly
   if (location.protocol === 'file:') {
     enter();
     return;
